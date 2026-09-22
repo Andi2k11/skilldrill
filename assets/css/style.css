@@ -18,12 +18,20 @@ body{
   width: min(1180px, 90vw);
   aspect-ratio: 1180 / 820;
   height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Increase card header height by ~50% */
 .device-card .card-header{
   padding-top: 1.125rem; /* 1.5rem reduced by 25% -> 1.125rem */
   padding-bottom: 1.125rem;
+}
+
+/* Let card-body fill remaining space so card keeps intended proportions */
+.device-card .card-body{
+  flex: 1 1 auto;
+  overflow: auto;
 }
 
 /* Ensure the card doesn't exceed viewport height */
