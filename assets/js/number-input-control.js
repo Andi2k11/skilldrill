@@ -80,4 +80,17 @@ document.addEventListener('DOMContentLoaded', function(){
     input.value = input.value.slice(0,pos) + insert + input.value.slice(pos);
     input.selectionStart = input.selectionEnd = pos + insert.length;
   });
+
+  // submit on Enter in the input field
+  try{
+    var inputEl = document.getElementById('answer-input');
+    if(inputEl){
+      inputEl.addEventListener('keydown', function(ev){
+        if(ev.key === 'Enter'){
+          ev.preventDefault();
+          inputEl.dispatchEvent(new CustomEvent('answer-submit',{bubbles:true}));
+        }
+      });
+    }
+  }catch(e){}
 });
