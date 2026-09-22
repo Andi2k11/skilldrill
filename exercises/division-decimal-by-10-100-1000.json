@@ -22,7 +22,7 @@
     "type": "division-decimal-by-10-100-1000",
     "parameters": {
       "min": 0,
-      "maxExclusive": 10,
+      "maxExclusive": 9999,
       "minDecimalPlaces": 1,
       "maxDecimalPlaces": 4,
       "divisors": [
