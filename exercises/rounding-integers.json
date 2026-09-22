@@ -1,0 +1,35 @@
+{
+  "id": "md7-k1-rounding-integers",
+  "title": "Avrundning av heltal",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avrunda femsiffriga heltal till ental, tiotal, hundratal eller tusental.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Avrunda talet:",
+    "prompt": "Avrunda {{number}} till närmaste {{placeName}}.",
+    "answer": {
+      "format": "integer",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "rounding-integer",
+    "parameters": {
+      "min": 10000,
+      "max": 99999,
+      "roundingPlaces": [
+        "ones",
+        "tens",
+        "hundreds",
+        "thousands"
+      ],
+      "questionCount": 15
+    }
+  }
+}

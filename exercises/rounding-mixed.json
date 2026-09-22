@@ -1,0 +1,51 @@
+{
+  "id": "md7-k1-rounding-mixed",
+  "title": "Blandad avrundning",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avrunda både femsiffriga heltal och decimaltal med fyra decimaler.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Avrunda talet:",
+    "prompt": "Avrunda {{number}} till närmaste {{placeName}}.",
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "rounding-mixed",
+    "parameters": {
+      "numberTypes": [
+        "integer",
+        "decimal"
+      ],
+      "integer": {
+        "min": 10000,
+        "max": 99999,
+        "roundingPlaces": [
+          "ones",
+          "tens",
+          "hundreds",
+          "thousands"
+        ]
+      },
+      "decimal": {
+        "min": 0,
+        "maxExclusive": 100,
+        "decimalPlaces": 4,
+        "roundingPlaces": [
+          "tenths",
+          "hundredths",
+          "thousandths"
+        ]
+      },
+      "questionCount": 15
+    }
+  }
+}
