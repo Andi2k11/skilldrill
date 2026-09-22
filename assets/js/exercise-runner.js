@@ -84,10 +84,43 @@
     // render a simple summary into question area
     var qs = document.querySelector(this.selectors.question);
     var qt = document.querySelector(this.selectors.title);
-    if(qs) qs.textContent = 'Avslutat — resultat: ' + correct + ' / ' + total;
-    if(qt) qt.textContent = 'Färdig';
+    if(qs) qs.textContent = Math.round((correct / total) * 100) + " %";
+    if(qt) qt.textContent = 'Klar';
     var input = document.querySelector(this.selectors.input);
     if(input){ input.value=''; input.classList.remove('is-valid','is-invalid'); }
+    // add a restart button to start the same exercise again
+    try{
+      var container = (qt && qt.parentNode) ? qt.parentNode : (qs && qs.parentNode);
+      if(container){
+        // remove existing restart button if any
+        var old = container.querySelector('.exercise-restart-btn');
+        if(old) old.parentNode.removeChild(old);
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'exercise-restart-btn';
+        btn.textContent = 'Börja om';
+        btn.addEventListener('click', (function(self){ return function(){ self.restart(); }; })(this));
+        container.appendChild(btn);
+      }
+    }catch(e){}
+  };
+
+  Runner.prototype.restart = function(){
+    this.index = 0;
+    this.correctCount = 0;
+    this.ended = false;
+    // remove restart button if present
+    try{
+      var qt = document.querySelector(this.selectors.title);
+      var container = (qt && qt.parentNode) ? qt.parentNode : null;
+      if(container){
+        var old = container.querySelector('.exercise-restart-btn');
+        if(old) old.parentNode.removeChild(old);
+      }
+    }catch(e){}
+    this.render();
+    var input = document.querySelector(this.selectors.input);
+    if(input) input.focus();
   };
 
   Runner.prototype.next = function(){
