@@ -22,8 +22,8 @@ body{
 
 /* Increase card header height by ~50% */
 .device-card .card-header{
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1.125rem; /* 1.5rem reduced by 25% -> 1.125rem */
+  padding-bottom: 1.125rem;
 }
 
 /* Ensure the card doesn't exceed viewport height */
