@@ -57,6 +57,46 @@ body{
 }
 .calc-grid .btn{width:100%;height:100%;display:inline-flex;align-items:center;justify-content:center}
 
+/* Button colour scheme for number-input-control */
+.calc-grid .btn{
+  border-width:1px;
+}
+
+/* Numbers: neutral light background */
+.calc-grid .btn.btn-light{
+  background: linear-gradient(180deg,#ffffff,#f2f4f7);
+  color:#111827;
+}
+
+/* Operators: visually distinct (amber) */
+.calc-grid .btn.btn-warning{
+  background: linear-gradient(180deg,#ffcf6b,#ffb347);
+  color:#1f2937;
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* Actions (backspace, left/right): secondary */
+.calc-grid .btn.btn-secondary{
+  background: linear-gradient(180deg,#e6eef8,#d3e6fb);
+  color:#0f172a;
+}
+
+/* Clear: danger but more muted */
+.calc-grid .btn.btn-danger{
+  background: linear-gradient(180deg,#ffdde0,#ffb3b8);
+  color:#5b0b0b;
+}
+
+/* Submit: primary accent */
+.calc-grid .btn.btn-primary{
+  background: linear-gradient(180deg,#4f46e5,#6366f1);
+  color:#fff;
+}
+
+/* Focus and active states */
+.calc-grid .btn:focus{box-shadow:0 0 0 0.15rem rgba(99,102,241,0.25);outline:none}
+.calc-grid .btn:active{transform:translateY(1px)}
+
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
   .device-card{max-height:92vh;width:auto;}
