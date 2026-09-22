@@ -43,8 +43,7 @@ body{
 .question-card .card-body{padding:1rem;}
 
 /* Layout for sub-cards inside question-card */
-.sub-cards{display:flex;flex-direction:row;align-items:stretch}
-.sub-cards{width:100%;}
+.sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;padding-left:0.75rem;padding-right:0.75rem;box-sizing:border-box}
 .sub-card-left{flex:0 0 60%;padding-left:0.5rem;padding-right:0.5rem}
 .sub-card-right{flex:0 0 40%;padding-left:0.5rem;padding-right:0.5rem}
 .sub-card-left .card-body,.sub-card-right .card-body{height:100%}
