@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', function(){
     if(val === '^'){
       // toggle caret/superscript mode
       caretMode = !caretMode;
-      if(caretMode) grid.classList.add('sup-active'); else grid.classList.remove('sup-active');
+      if(caretMode){
+        grid.classList.add('sup-active');
+        btn.classList.add('active');
+      } else {
+        grid.classList.remove('sup-active');
+        btn.classList.remove('active');
+      }
       return;
     }
 
