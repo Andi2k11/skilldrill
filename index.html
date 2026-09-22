@@ -8,20 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!-- Site stylesheet (cache-busted automatically) -->
     <link id="site-css" rel="stylesheet" href="/assets/css/style.css">
-    <script>
-      (function(){
-        try{
-          var link = document.getElementById('site-css');
-          if(!link) return;
-          var url = new URL(link.href, location.origin);
-          // Use a short timestamp (minute resolution) to avoid excessive cache misses
-          var ts = new Date();
-          var ver = ts.getFullYear().toString() + ('0'+(ts.getMonth()+1)).slice(-2) + ('0'+ts.getDate()).slice(-2) + 'T' + ('0'+ts.getHours()).slice(-2) + ('0'+ts.getMinutes()).slice(-2);
-          url.searchParams.set('v', ver);
-          link.href = url.toString();
-        }catch(e){console && console.warn && console.warn('cache-buster failed', e);} 
-      })();
-    </script>
+    
   </head>
   <body>
     <div class="d-flex align-items-center justify-content-center min-vh-100">
@@ -78,46 +65,7 @@
                       <button type="button" class="btn btn-danger">C</button>
                       <button type="button" class="btn btn-primary">Svar</button>
                     </div>
-                    <script>
-                      (function(){
-                        const grid = document.querySelector('.calc-grid');
-                        const input = document.getElementById('answer-input');
-                        if(!grid || !input) return;
-                        grid.addEventListener('click', e => {
-                          const btn = e.target.closest('button');
-                          if(!btn) return;
-                          const val = btn.textContent.trim();
-                          if(val === '⌫'){
-                            const pos = input.selectionStart || input.value.length;
-                            input.value = input.value.slice(0,pos-1) + input.value.slice(pos);
-                            input.selectionStart = input.selectionEnd = Math.max(0,pos-1);
-                            return;
-                          }
-                          if(val === 'C'){
-                            input.value = '';
-                            return;
-                          }
-                          if(val === '<'){
-                            input.selectionStart = Math.max(0,(input.selectionStart||0)-1);
-                            input.selectionEnd = input.selectionStart;
-                            return;
-                          }
-                          if(val === '>'){
-                            input.selectionStart = Math.min(input.value.length,(input.selectionStart||0)+1);
-                            input.selectionEnd = input.selectionStart;
-                            return;
-                          }
-                          if(val === 'Svar'){
-                            input.dispatchEvent(new CustomEvent('answer-submit',{bubbles:true}));
-                            return;
-                          }
-                          // insert character at cursor
-                          const pos = input.selectionStart || input.value.length;
-                          input.value = input.value.slice(0,pos) + val + input.value.slice(pos);
-                          input.selectionStart = input.selectionEnd = pos + val.length;
-                        });
-                      })();
-                    </script>
+                    
                   </div>
                 </div>
           </div>
@@ -127,5 +75,6 @@
 
     <!-- Bootstrap bundle with Popper (with SRI) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="/assets/js/app.js"></script>
   </body>
 </html>
