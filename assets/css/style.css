@@ -111,6 +111,13 @@ body{
 .calc-grid.sup-active .btn{opacity:0.95}
 .calc-grid.sup-active .btn.btn-primary{box-shadow:0 0 0 0.15rem rgba(99,102,241,0.18)}
 
+/* Parentheses styling: consistent colour */
+.calc-grid .btn-paren{
+  background: linear-gradient(180deg,#eef2ff,#e2e8ff);
+  color:#0f172a;
+  border-color: rgba(15,23,42,0.12);
+}
+
 
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
