@@ -6,8 +6,22 @@
     <title>Skilldrill</title>
     <!-- Bootstrap 5 (CSS with SRI) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Site stylesheet (with cache-buster) -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=20260922T0000">
+    <!-- Site stylesheet (cache-busted automatically) -->
+    <link id="site-css" rel="stylesheet" href="/assets/css/style.css">
+    <script>
+      (function(){
+        try{
+          var link = document.getElementById('site-css');
+          if(!link) return;
+          var url = new URL(link.href, location.origin);
+          // Use a short timestamp (minute resolution) to avoid excessive cache misses
+          var ts = new Date();
+          var ver = ts.getFullYear().toString() + ('0'+(ts.getMonth()+1)).slice(-2) + ('0'+ts.getDate()).slice(-2) + 'T' + ('0'+ts.getHours()).slice(-2) + ('0'+ts.getMinutes()).slice(-2);
+          url.searchParams.set('v', ver);
+          link.href = url.toString();
+        }catch(e){console && console.warn && console.warn('cache-buster failed', e);} 
+      })();
+    </script>
   </head>
   <body>
     <div class="d-flex align-items-center justify-content-center min-vh-100">
