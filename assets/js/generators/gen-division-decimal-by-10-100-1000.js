@@ -42,7 +42,11 @@ window.divisionGenerators['division-decimal-by-10-100-1000'] = (function () {
       var questions = [];
       var count = params.questionCount || 15;
       var min = typeof params.min === 'number' ? params.min : 0;
-      var maxExclusive = typeof params.maxExclusive === 'number' ? params.maxExclusive : 10;
+      // support several parameter names for the decimal upper bound
+      var maxExclusive = (typeof params.maxExclusive === 'number') ? params.maxExclusive
+        : (typeof params.decimalMaxExclusive === 'number') ? params.decimalMaxExclusive
+        : (typeof params.max === 'number') ? params.max
+        : 10;
       var minDecimalPlaces = typeof params.minDecimalPlaces === 'number' ? params.minDecimalPlaces : 1;
       var maxDecimalPlaces = typeof params.maxDecimalPlaces === 'number' ? params.maxDecimalPlaces : 4;
       var divisors = params.divisors && params.divisors.length ? params.divisors : [10, 100, 1000];

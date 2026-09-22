@@ -52,7 +52,11 @@ window.divisionGenerators['division-mixed-by-10-100-1000'] = (function () {
       var integerMin = typeof params.integerMin === 'number' ? params.integerMin : 0;
       var integerMax = typeof params.integerMax === 'number' ? params.integerMax : 9999;
       var decimalMin = typeof params.decimalMin === 'number' ? params.decimalMin : 0;
-      var decimalMaxExclusive = typeof params.decimalMaxExclusive === 'number' ? params.decimalMaxExclusive : 10;
+      // allow multiple parameter names for decimal upper bound, fall back to integer max
+      var decimalMaxExclusive = (typeof params.decimalMaxExclusive === 'number') ? params.decimalMaxExclusive
+        : (typeof params.maxExclusive === 'number') ? params.maxExclusive
+        : (typeof params.max === 'number') ? params.max
+        : 10;
       var minDecimalPlaces = typeof params.minDecimalPlaces === 'number' ? params.minDecimalPlaces : 1;
       var maxDecimalPlaces = typeof params.maxDecimalPlaces === 'number' ? params.maxDecimalPlaces : 4;
       var numberTypes = params.numberTypes && params.numberTypes.length ? params.numberTypes : ['integer', 'decimal'];
