@@ -8,7 +8,7 @@
     if(typeof str !== 'string') return null;
     var s = str.trim().replace(/\s/g,'').replace(',', '.');
     var n = parseFloat(s);
-    if(Number.isFinite(n)) return Math.round(n);
+    if(Number.isFinite(n)) return n;
     return null;
   }
 
