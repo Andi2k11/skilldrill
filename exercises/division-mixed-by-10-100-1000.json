@@ -24,7 +24,7 @@
       "integerMin": 0,
       "integerMax": 9999,
       "decimalMin": 0,
-      "decimalMaxExclusive": 10,
+      "decimalMaxExclusive": 9999,
       "minDecimalPlaces": 1,
       "maxDecimalPlaces": 4,
       "numberTypes": [
