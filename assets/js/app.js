@@ -51,11 +51,18 @@ document.addEventListener('DOMContentLoaded', function(){
           // map generator type to expected script path. Try both exact name and with '-generator' suffix
           var genPath1 = '/assets/js/generators/' + gtype + '.js';
           var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
-          // try genPath1, if it fails try genPath2
+          var genPathGenSuffix = '/assets/js/generators/' + gtype + '-gen.js';
+          var genPathGenPrefix = '/assets/js/generators/gen-' + gtype + '.js';
+          // try genPath1, then several common naming variants
           // also try a fallback that maps e.g. 'multiplication-decimal-by-10-100-1000' -> 'multiplication-decimal-generator'
           var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
-          var genPath3 = '/assets/js/generators/' + fallbackBase + '.js';
-          return loadScript(genPath1).catch(function(){ return loadScript(genPath2); }).catch(function(){ return loadScript(genPath3); }).then(function(){ return cfg; });
+          var genPathFallback = '/assets/js/generators/' + fallbackBase + '.js';
+          return loadScript(genPath1)
+            .catch(function(){ return loadScript(genPath2); })
+            .catch(function(){ return loadScript(genPathGenSuffix); })
+            .catch(function(){ return loadScript(genPathGenPrefix); })
+            .catch(function(){ return loadScript(genPathFallback); })
+            .then(function(){ return cfg; });
         }
         return cfg;
       }).then(function(cfg){
