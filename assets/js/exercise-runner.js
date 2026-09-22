@@ -24,7 +24,8 @@
     return loadJSON(exerciseJsonPath).then(function(cfg){
       self.config = cfg;
       var gtype = cfg.generator && cfg.generator.type;
-      var gen = window.multiplicationGenerators && window.multiplicationGenerators[gtype];
+      var gen = (window.multiplicationGenerators && window.multiplicationGenerators[gtype]) ||
+            (window.divisionGenerators && window.divisionGenerators[gtype]);
       if(!gen) throw new Error('Generator not found: '+gtype);
       self.questions = gen.generate(cfg.generator.parameters || {});
       self.index = 0;
