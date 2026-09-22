@@ -43,10 +43,10 @@ body{
 .question-card .card-body{padding:1rem;}
 
 /* Layout for sub-cards inside question-card */
-.sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;box-sizing:border-box;gap:1rem;padding-right:1rem}
-.sub-card-left{flex:0 0 60%;}
-.sub-card-right{flex:0 0 40%;}
-.sub-card-left .card-body,.sub-card-right .card-body{height:100%}
+.sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;box-sizing:border-box;gap:1rem;padding-right:1rem;flex:1}
+.sub-card-left{flex:0 0 60%;display:flex;flex-direction:column}
+.sub-card-right{flex:0 0 40%;display:flex;flex-direction:column}
+.sub-card-left .card-body,.sub-card-right .card-body{flex:1;display:flex;flex-direction:column}
 
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
