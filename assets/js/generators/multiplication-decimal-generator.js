@@ -64,7 +64,7 @@ window.multiplicationGenerators['multiplication-decimal-by-10-100-1000'] = (func
           b: multiplier,
           left: left,
           right: right,
-          text: 'Beräkna ' + left + ' × ' + right + '.',
+          text: 'Beräkna ' + left + ' × ' + right,
           answer: answer,
           answerDisplay: formatSwedishNumber(answer)
         });
