@@ -1,0 +1,35 @@
+{
+  "id": "md7-k1-rounding-decimal",
+  "title": "Avrundning av decimaltal",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avrunda tal mindre än 100 med fyra decimaler till tiondel, hundradel eller tusendel.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Avrunda talet:",
+    "prompt": "Avrunda {{number}} till närmaste {{placeName}}.",
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "rounding-decimal",
+    "parameters": {
+      "min": 0,
+      "maxExclusive": 100,
+      "decimalPlaces": 4,
+      "roundingPlaces": [
+        "tenths",
+        "hundredths",
+        "thousandths"
+      ],
+      "questionCount": 15
+    }
+  }
+}
