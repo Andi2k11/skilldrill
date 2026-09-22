@@ -24,8 +24,23 @@
     return loadJSON(exerciseJsonPath).then(function(cfg){
       self.config = cfg;
       var gtype = cfg.generator && cfg.generator.type;
-      var gen = (window.multiplicationGenerators && window.multiplicationGenerators[gtype]) ||
-            (window.divisionGenerators && window.divisionGenerators[gtype]);
+      // look up generator in known registries; include roundingGenerators and any other registries present
+      var gen = null;
+      var registries = [ 'multiplicationGenerators', 'divisionGenerators', 'roundingGenerators' ];
+      for(var i=0;i<registries.length && !gen;i++){
+        var r = window[registries[i]];
+        if(r && r[gtype]) gen = r[gtype];
+      }
+      // final generic fallback: scan window for any object that ends with 'Generators'
+      if(!gen){
+        for(var k in window){
+          if(!window.hasOwnProperty(k)) continue;
+          if(k.length>10 && k.slice(-10) === 'Generators'){
+            var obj = window[k];
+            if(obj && obj[gtype]){ gen = obj[gtype]; break; }
+          }
+        }
+      }
       if(!gen) throw new Error('Generator not found: '+gtype);
       self.questions = gen.generate(cfg.generator.parameters || {});
       self.index = 0;
