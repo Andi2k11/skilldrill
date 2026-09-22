@@ -20,6 +20,12 @@ body{
   height: auto;
 }
 
+/* Increase card header height by ~50% */
+.device-card .card-header{
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
   .device-card{max-height:92vh;width:auto;}
