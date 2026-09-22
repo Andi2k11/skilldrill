@@ -84,6 +84,12 @@ body{
   border-color: rgba(0,0,0,0.08);
 }
 
+/* Operators styled like numbers (optional alternate class) */
+.calc-grid .btn.btn-op{
+  background: linear-gradient(180deg,#ffffff,#f2f4f7);
+  color:#111827;
+}
+
 /* Actions (backspace, left/right): secondary */
 .calc-grid .btn.btn-secondary{
   background: linear-gradient(180deg,#e6eef8,#d3e6fb);
