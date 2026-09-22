@@ -1,0 +1,25 @@
+{
+  "id": "md7-k1-mult-10-100-1000",
+  "title": "Multiplikation med 10, 100, 1000",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Multiplicera ett heltal mellan 0 och 999 med 10, 100 eller 1000.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "prompt": "Beräkna {{a}} × {{b}}.",
+    "answer": { "format": "integer" }
+  },
+  "generator": {
+    "type": "multiplication-by-10-100-1000",
+    "parameters": {
+      "min": 0,
+      "max": 999,
+      "multipliers": [10,100,1000],
+      "questionCount": 15
+    }
+  }
+}
