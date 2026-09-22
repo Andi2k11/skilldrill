@@ -1,0 +1,2 @@
+// Alias to support GET loading using gen-rounding-integer
+importScript && importScript('assets/js/generators/gen-rounding-integers.js');
