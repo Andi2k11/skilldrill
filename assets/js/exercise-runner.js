@@ -43,6 +43,8 @@
     var taskTitle = (this.config && this.config.question && this.config.question.title) ? this.config.question.title : ('Fråga ' + (this.index+1) + ' / ' + this.questions.length);
     if(qs) qs.textContent = q.text;
     if(qt) qt.textContent = taskTitle;
+    // focus input for the new question
+    try{ var input = document.querySelector(this.selectors.input); if(input) input.focus(); }catch(e){}
   };
 
   Runner.prototype.bind = function(){
