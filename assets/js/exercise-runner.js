@@ -97,7 +97,8 @@
         if(old) old.parentNode.removeChild(old);
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'exercise-restart-btn';
+        // Use Bootstrap button classes to match site style
+        btn.className = 'btn btn-primary exercise-restart-btn';
         btn.textContent = 'Börja om';
         btn.addEventListener('click', (function(self){ return function(){ self.restart(); }; })(this));
         container.appendChild(btn);
