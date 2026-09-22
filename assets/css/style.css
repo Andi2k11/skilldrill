@@ -10,3 +10,16 @@ body{
 
 /* Enkel hjälparklass */
 .lead{color: #495057;}
+
+/* Device card sized for iPad Air landscape (approx 1180x820 logical px). Responsive fallback included */
+.device-card{
+  width: 1180px;
+  max-width: 96vw;
+  height: 820px;
+  max-height: 92vh;
+}
+
+/* On narrow screens (phones/tablet portrait) scale down */
+@media (max-width: 1180px){
+  .device-card{width:92vw;height:60vh;}
+}
