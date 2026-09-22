@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', function(){
     var val = btn.textContent.trim();
 
     if(val === '^'){
-      // enter caret/superscript mode
-      caretMode = true;
+      // toggle caret/superscript mode
+      caretMode = !caretMode;
+      if(caretMode) grid.classList.add('sup-active'); else grid.classList.remove('sup-active');
       return;
     }
 
@@ -25,29 +26,29 @@ document.addEventListener('DOMContentLoaded', function(){
       var pos = input.selectionStart || input.value.length;
       input.value = input.value.slice(0,pos-1) + input.value.slice(pos);
       input.selectionStart = input.selectionEnd = Math.max(0,pos-1);
-      caretMode = false;
+      // keep caretMode if active (user asked: while active, continue inserting superscript)
       return;
     }
     if(val === 'C'){
       input.value = '';
-      caretMode = false;
+      // keep caretMode
       return;
     }
     if(val === '<'){
       input.selectionStart = Math.max(0,(input.selectionStart||0)-1);
       input.selectionEnd = input.selectionStart;
-      caretMode = false;
+      // keep caretMode
       return;
     }
     if(val === '>'){
       input.selectionStart = Math.min(input.value.length,(input.selectionStart||0)+1);
       input.selectionEnd = input.selectionStart;
-      caretMode = false;
+      // keep caretMode
       return;
     }
     if(val === 'Svar'){
       input.dispatchEvent(new CustomEvent('answer-submit',{bubbles:true}));
-      caretMode = false;
+      // keep caretMode
       return;
     }
 
