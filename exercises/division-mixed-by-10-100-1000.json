@@ -1,0 +1,43 @@
+{
+  "id": "md7-k1-div-mixed-10-100-1000",
+  "title": "Division av heltal och decimaltal med 10, 100 och 1000",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Dividera ett heltal mellan 0 och 9999 eller ett decimaltal som är mindre än 10 och har mellan en och fyra decimaler med 10, 100 eller 1000.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Beräkna divisionen:",
+    "prompt": "Beräkna {{a}} ÷ {{b}}.",
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "division-mixed-by-10-100-1000",
+    "parameters": {
+      "integerMin": 0,
+      "integerMax": 9999,
+      "decimalMin": 0,
+      "decimalMaxExclusive": 10,
+      "minDecimalPlaces": 1,
+      "maxDecimalPlaces": 4,
+      "numberTypes": [
+        "integer",
+        "decimal"
+      ],
+      "divisors": [
+        10,
+        100,
+        1000
+      ],
+      "questionCount": 15
+    },
+    "file": "gen-division-mixed-by-10-100-1000.js"
+  }
+}

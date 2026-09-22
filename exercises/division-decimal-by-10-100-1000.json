@@ -1,0 +1,37 @@
+{
+  "id": "md7-k1-div-decimal-10-100-1000",
+  "title": "Division av decimaltal med 10, 100 och 1000",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Dividera ett decimaltal som är mindre än 10 och har mellan en och fyra decimaler med 10, 100 eller 1000.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Beräkna divisionen:",
+    "prompt": "Beräkna {{a}} ÷ {{b}}.",
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "division-decimal-by-10-100-1000",
+    "parameters": {
+      "min": 0,
+      "maxExclusive": 10,
+      "minDecimalPlaces": 1,
+      "maxDecimalPlaces": 4,
+      "divisors": [
+        10,
+        100,
+        1000
+      ],
+      "questionCount": 15
+    },
+    "file": "gen-division-decimal-by-10-100-1000.js"
+  }
+}

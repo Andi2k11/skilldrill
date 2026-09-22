@@ -1,0 +1,43 @@
+{
+  "id": "md7-k1-mult-mixed-10-100-1000",
+  "title": "Multiplikation av heltal och decimaltal med 10, 100 och 1000",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Multiplicera ett heltal mellan 0 och 9999 eller ett decimaltal som är mindre än 10 och har mellan en och fyra decimaler med 10, 100 eller 1000.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Beräkna multiplikationen:",
+    "prompt": "Beräkna {{left}} × {{right}}.",
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "multiplication-mixed-by-10-100-1000",
+    "parameters": {
+      "integerMin": 0,
+      "integerMax": 9999,
+      "decimalMin": 0,
+      "decimalMaxExclusive": 10,
+      "minDecimalPlaces": 1,
+      "maxDecimalPlaces": 4,
+      "numberTypes": [
+        "integer",
+        "decimal"
+      ],
+      "multipliers": [
+        10,
+        100,
+        1000
+      ],
+      "randomizeFactorOrder": true,
+      "questionCount": 15
+    }
+  }
+}
