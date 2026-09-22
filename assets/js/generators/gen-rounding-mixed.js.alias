@@ -1,2 +1,0 @@
-// Alias to support GET loading using gen-rounding-mixed
-importScript && importScript('assets/js/generators/gen-rounding-mixed.js');
