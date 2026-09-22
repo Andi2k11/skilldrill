@@ -13,13 +13,19 @@ body{
 
 /* Device card sized for iPad Air landscape (approx 1180x820 logical px). Responsive fallback included */
 .device-card{
-  width: 1180px;
+  /* Use viewport-based sizing with an aspect ratio matching iPad Air landscape (~1.44) */
   max-width: 96vw;
-  height: 820px;
-  max-height: 92vh;
+  width: min(1180px, 90vw);
+  aspect-ratio: 1180 / 820;
+  height: auto;
 }
 
-/* On narrow screens (phones/tablet portrait) scale down */
-@media (max-width: 1180px){
-  .device-card{width:92vw;height:60vh;}
+/* Ensure the card doesn't exceed viewport height */
+@media (min-aspect-ratio: 1180/820){
+  .device-card{max-height:92vh;width:auto;}
+}
+
+/* On small screens scale down */
+@media (max-width: 600px){
+  .device-card{width:92vw;}
 }
