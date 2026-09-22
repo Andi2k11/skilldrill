@@ -46,6 +46,7 @@ body{
 .sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;box-sizing:border-box;gap:1rem;padding:0}
 .sub-card-left{flex:0 0 60%;}
 .sub-card-right{flex:0 0 40%;}
+.sub-card-right{margin-right:1rem}
 .sub-card-left .card-body,.sub-card-right .card-body{height:100%}
 
 /* Ensure the card doesn't exceed viewport height */
