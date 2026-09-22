@@ -34,6 +34,14 @@ body{
   overflow: auto;
 }
 
+/* question-card should take 40% of the parent card's height */
+.question-card{
+  height: 40%;
+  min-height: 120px;
+}
+
+.question-card .card-body{padding:1rem;}
+
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
   .device-card{max-height:92vh;width:auto;}
