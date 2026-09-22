@@ -22,7 +22,20 @@ window.roundingGenerators['rounding-decimal']=(function(){
 			var rounded=Math.round(scaled/div);
 			var answer=rounded/Math.pow(10,target);
 			var display=fmtScaled(scaled,d);
-			q.push({number:scaled/scale,numberDisplay:display,place:place,placeName:names[place],text:'Avrunda '+display+' till närmaste '+names[place]+'.',answer:answer,answerDisplay:answer.toFixed(target).replace('.',',')});
+			// phrasing: either use place name (tiondel) or decimal-count (1 decimal)
+			var phrasingOptions = [];
+			phrasingOptions.push('place');
+			if(target > 0) phrasingOptions.push('decimalCount');
+			var phr = choice(phrasingOptions);
+			var text, placeName;
+			if(phr === 'decimalCount'){
+				placeName = target + ' decimal' + (target === 1 ? '' : 'er');
+				text = 'Avrunda ' + display + ' till ' + target + ' decimal' + (target === 1 ? '' : 'er') + '.';
+			} else {
+				placeName = names[place];
+				text = 'Avrunda ' + display + ' till närmaste ' + names[place] + '.';
+			}
+			q.push({number:scaled/scale,numberDisplay:display,place:place,placeName:placeName,text:text,answer:answer,answerDisplay:answer.toFixed(target).replace('.',',')});
 		}
 		return q;
 	} };

@@ -13,7 +13,19 @@ window.roundingGenerators['rounding-mixed']=(function(){
 		var count=p.questionCount||15;
 		for(var i=0;i<count;i++){
 			if(i%2===0){ q.push(makeInt(p.integer)); }
-			else { q.push(makeDec(p.decimal)); }
+			else {
+				var dec = makeDec(p.decimal);
+				// adjust phrasing for decimals similarly to gen-rounding-decimal
+				var target = dec.place ? (dec.place === 'ones' ? 0 : (dec.place === 'tenths' ? 1 : (dec.place === 'hundredths' ? 2 : 3))) : (dec.decimalPlaces || 1);
+				var phrasingOptions = ['place'];
+				if(target > 0) phrasingOptions.push('decimalCount');
+				var phr = choice(phrasingOptions);
+				if(phr === 'decimalCount'){
+					dec.placeName = target + ' decimal' + (target === 1 ? '' : 'er');
+					dec.text = 'Avrunda ' + dec.numberDisplay + ' till ' + target + ' decimal' + (target === 1 ? '' : 'er') + '.';
+				}
+				q.push(dec);
+			}
 		}
 		return q;
 	}};
