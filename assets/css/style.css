@@ -42,6 +42,12 @@ body{
 
 .question-card .card-body{padding:1rem;}
 
+/* Layout for sub-cards inside question-card */
+.sub-cards{display:flex;flex-direction:row;align-items:stretch}
+.sub-card-left{flex:0 0 60%;}
+.sub-card-right{flex:0 0 40%;}
+.sub-card-left .card-body,.sub-card-right .card-body{height:100%}
+
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
   .device-card{max-height:92vh;width:auto;}
