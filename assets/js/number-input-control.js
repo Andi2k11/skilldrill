@@ -54,7 +54,11 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     if(val === 'Svar'){
       input.dispatchEvent(new CustomEvent('answer-submit',{bubbles:true}));
-      // keep caretMode
+      // clear caretMode and visual indicators when answer is sent
+      caretMode = false;
+      grid.classList.remove('sup-active');
+      var activeBtn = grid.querySelector('.btn.active');
+      if(activeBtn) activeBtn.classList.remove('active');
       return;
     }
 
