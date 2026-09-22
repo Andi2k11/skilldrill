@@ -48,6 +48,15 @@ body{
 .sub-card-right{flex:0 0 40%;display:flex;flex-direction:column}
 .sub-card-left .card-body,.sub-card-right .card-body{flex:1;display:flex;flex-direction:column}
 
+/* Calculator grid in input-card */
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:48px;
+  gap:0.5rem;
+}
+.calc-grid .btn{width:100%;height:100%;display:inline-flex;align-items:center;justify-content:center}
+
 /* Ensure the card doesn't exceed viewport height */
 @media (min-aspect-ratio: 1180/820){
   .device-card{max-height:92vh;width:auto;}
