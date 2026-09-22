@@ -39,8 +39,10 @@
     if(!q) return;
     var qs = document.querySelector(this.selectors.question);
     var qt = document.querySelector(this.selectors.title);
+    // If exercise JSON contains a question.title, show that as task-specific header
+    var taskTitle = (this.config && this.config.question && this.config.question.title) ? this.config.question.title : ('Fråga ' + (this.index+1) + ' / ' + this.questions.length);
     if(qs) qs.textContent = q.text;
-    if(qt) qt.textContent = 'Fråga ' + (this.index+1) + ' / ' + this.questions.length;
+    if(qt) qt.textContent = taskTitle;
   };
 
   Runner.prototype.bind = function(){
