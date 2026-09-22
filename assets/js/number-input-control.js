@@ -1,4 +1,4 @@
-// calc.js - calculator button wiring for the .calc-grid and #answer-input
+// number-input-control.js - input control wiring for the .calc-grid and #answer-input
 document.addEventListener('DOMContentLoaded', function(){
   var grid = document.querySelector('.calc-grid');
   var input = document.getElementById('answer-input');
