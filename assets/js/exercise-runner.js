@@ -42,7 +42,22 @@
     var qt = document.querySelector(this.selectors.title);
     // If exercise JSON contains a question.title, show that as task-specific header
     var taskTitle = (this.config && this.config.question && this.config.question.title) ? this.config.question.title : ('Fråga ' + (this.index+1) + ' / ' + this.questions.length);
-    if(qs) qs.textContent = q.text;
+    if(qs) {
+      try{
+        var gtype = (this.config && this.config.generator && this.config.generator.type) || '';
+        if(typeof katex !== 'undefined' && gtype.indexOf('division') === 0){
+          // render division as a LaTeX fraction: use the displayed left and right values
+          // convert Swedish comma to dot for numeric latex, but keep display as numbers
+          var left = (q.left || q.a || '').toString().replace(',', '.');
+          var right = (q.right || q.b || '').toString().replace(',', '.');
+          var latex = '\\dfrac{' + left + '}{' + right + '}';
+          qs.innerHTML = '';
+          katex.render(latex, qs, {throwOnError:false});
+        } else {
+          qs.textContent = q.text;
+        }
+      }catch(e){ qs.textContent = q.text; }
+    }
     if(qt) qt.textContent = taskTitle;
     // focus input for the new question
     try{ var input = document.querySelector(this.selectors.input); if(input) input.focus(); }catch(e){}
