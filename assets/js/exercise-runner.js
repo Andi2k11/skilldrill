@@ -59,12 +59,10 @@
     if(ok){
       input.classList.remove('is-invalid');
       input.classList.add('is-valid');
-      this._flash('Rätt!', 'success');
       this.correctCount = (this.correctCount||0) + 1;
     } else {
       input.classList.remove('is-valid');
       input.classList.add('is-invalid');
-      this._flash('Fel — rätt svar: ' + q.answer, 'danger');
     }
     var self = this;
     // after 1.5s go to next question or finish
@@ -75,31 +73,17 @@
     return ok;
   };
 
-  Runner.prototype._flash = function(text, level){
-    // create or reuse flash element
-    var id = 'exercise-flash';
-    var el = document.getElementById(id);
-    if(!el){
-      el = document.createElement('div'); el.id = id; el.className = 'exercise-flash';
-      document.body.appendChild(el);
-    }
-    el.textContent = text;
-    el.className = 'exercise-flash alert alert-' + (level||'info');
-    // ensure visible
-    el.style.display = 'block';
-  };
-
-  Runner.prototype._hideFlash = function(){
-    var el = document.getElementById('exercise-flash'); if(el) el.style.display='none';
-  };
-
   Runner.prototype.end = function(){
     this.ended = true;
-    this._hideFlash();
     var total = this.questions.length;
     var correct = this.correctCount||0;
-    // show simple summary in flash area
-    this._flash('Avslutat — resultat: ' + correct + ' / ' + total, 'primary');
+    // render a simple summary into question area
+    var qs = document.querySelector(this.selectors.question);
+    var qt = document.querySelector(this.selectors.title);
+    if(qs) qs.textContent = 'Avslutat — resultat: ' + correct + ' / ' + total;
+    if(qt) qt.textContent = 'Färdig';
+    var input = document.querySelector(this.selectors.input);
+    if(input){ input.value=''; input.classList.remove('is-valid','is-invalid'); }
   };
 
   Runner.prototype.next = function(){
