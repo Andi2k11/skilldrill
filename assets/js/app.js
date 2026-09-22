@@ -8,8 +8,16 @@
 document.addEventListener('DOMContentLoaded', function(){
   if(window.location.pathname.indexOf('index.html') !== -1 || window.location.pathname === '/' ){
     var runner = new window.ExerciseRunner();
-    // load the exercise JSON we added
-    runner.load('/exercises/multiplication-by-10-100-1000.json').then(function(r){
+    // read exercise parameter from URL: ?exercise=path-or-id
+    var params = new URLSearchParams(location.search);
+    var ex = params.get('exercise');
+    var path = '/exercises/multiplication-by-10-100-1000.json';
+    if(ex){
+      // if user passed a filename with .json or an absolute path, use it; otherwise map id -> exercises/{id}.json
+      if(ex.indexOf('.json') !== -1 || ex.charAt(0) === '/') path = ex;
+      else path = '/exercises/' + ex + '.json';
+    }
+    runner.load(path).then(function(r){
       r.bind();
       r.render();
       // expose for debug
