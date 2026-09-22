@@ -70,7 +70,9 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
 
-    var pos = input.selectionStart || input.value.length;
+    // ensure input is focused so selectionStart/End behave predictably
+    try{ input.focus(); }catch(e){}
+    var pos = (typeof input.selectionStart === 'number') ? input.selectionStart : input.value.length;
     input.value = input.value.slice(0,pos) + insert + input.value.slice(pos);
     input.selectionStart = input.selectionEnd = pos + insert.length;
   });
