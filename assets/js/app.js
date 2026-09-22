@@ -26,11 +26,14 @@ document.addEventListener('DOMContentLoaded', function(){
       if(ex.indexOf('.json') !== -1 || ex.charAt(0) === '/') path = ex;
       else path = '/exercises/' + ex + '.json';
     }
-    runner.load(path).then(function(r){
-      r.bind();
-      r.render();
-      // expose for debug
-      window._currentRunner = r;
-    }).catch(function(err){ console && console.error && console.error('Runner load error', err); });
+    // Only auto-load if an explicit exercise parameter was provided.
+    if(ex){
+      runner.load(path).then(function(r){
+        r.bind();
+        r.render();
+        // expose for debug
+        window._currentRunner = r;
+      }).catch(function(err){ console && console.error && console.error('Runner load error', err); });
+    }
   }
 });
