@@ -1,0 +1,745 @@
+{
+  "$schemaVersion": "1.0",
+  "_instructions": {
+    "purpose": "Mall och referens för AI-genererade matematikövningar.",
+    "usage": "Kopiera objektet exerciseTemplate när en ny övningsfil skapas. Fält som börjar med _ är dokumentation och ska ignoreras av övningsmotorn.",
+    "rules": [
+      "Alla övningar ska använda samma grundstruktur.",
+      "id ska vara unikt och skrivas med gemener och bindestreck.",
+      "question.type anger hur eleven lämnar sitt svar.",
+      "generator.type anger hur uppgiften och facit skapas.",
+      "Övningsspecifika inställningar ska placeras i generator.parameters.",
+      "questionCount ska vara 15 om inget annat anges.",
+      "Endast de fält som behövs för vald fråge- och generatortyp ska behållas i den färdiga övningsfilen.",
+      "Facit ska genereras av JavaScript och ska inte exponeras för eleven före verifiering."
+    ]
+  },
+  "exerciseTemplate": {
+    "id": "",
+    "version": "1.0",
+    "title": "",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "chapterTitle": "",
+    "description": "",
+    "settings": {
+      "questionCount": 15,
+      "showProgress": true,
+      "showCorrectAnswer": false,
+      "shuffleQuestions": true,
+      "allowRetry": true
+    },
+    "question": {
+      "type": "numeric",
+      "prompt": "",
+      "answer": {
+        "format": "integer",
+        "acceptedFormats": [
+          "integer"
+        ],
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "allowThousandsSeparator": true,
+        "decimalSeparator": ",",
+        "unit": null,
+        "acceptedUnits": [],
+        "allowSpaceBeforeUnit": true,
+        "selectionMode": null
+      }
+    },
+    "generator": {
+      "type": "multiplication",
+      "parameters": {}
+    }
+  },
+  "_questionTypes": {
+    "numeric": {
+      "description": "Ett rent numeriskt svar.",
+      "examples": [
+        "42",
+        "3,5",
+        "-7",
+        "1000",
+        "2^5",
+        "1/4"
+      ],
+      "answerFormats": [
+        "integer",
+        "decimal",
+        "fraction",
+        "power",
+        "percent",
+        "scientificNotation"
+      ]
+    },
+    "numericWithUnit": {
+      "description": "Ett tal tillsammans med en enhet.",
+      "examples": [
+        "10 cm",
+        "2,5 kg",
+        "45 grader",
+        "12 km/h"
+      ],
+      "answerFormats": [
+        "integerWithUnit",
+        "decimalWithUnit",
+        "fractionWithUnit",
+        "percentWithUnit"
+      ]
+    },
+    "text": {
+      "description": "Ett kort textsvar.",
+      "examples": [
+        "triangel",
+        "parallell",
+        "proportionalitet"
+      ],
+      "answerFormats": [
+        "exactText",
+        "acceptedTexts",
+        "caseInsensitiveText"
+      ]
+    },
+    "singleChoice": {
+      "description": "Ett alternativ ska väljas.",
+      "examples": [
+        "Vilket tal är ett primtal?",
+        "Vilket uttryck har störst värde?"
+      ],
+      "answerFormats": [
+        "singleOption"
+      ]
+    },
+    "multipleChoice": {
+      "description": "Ett eller flera alternativ ska väljas.",
+      "examples": [
+        "Vilka tal är jämna?",
+        "Vilka uttryck är ekvivalenta?"
+      ],
+      "answerFormats": [
+        "multipleOptions"
+      ]
+    },
+    "ordering": {
+      "description": "Alternativ ska placeras i rätt ordning.",
+      "examples": [
+        "Sortera talen från minst till störst.",
+        "Ordna beräkningsstegen."
+      ],
+      "answerFormats": [
+        "orderedOptions"
+      ]
+    },
+    "matching": {
+      "description": "Objekt i två grupper ska paras ihop.",
+      "examples": [
+        "Para ihop procentform med decimalform.",
+        "Para ihop begrepp med förklaring."
+      ],
+      "answerFormats": [
+        "matchedPairs"
+      ]
+    },
+    "expression": {
+      "description": "Ett matematiskt uttryck ska skrivas.",
+      "examples": [
+        "2x + 4",
+        "3(a + 2)",
+        "x/5"
+      ],
+      "answerFormats": [
+        "exactExpression",
+        "equivalentExpression"
+      ]
+    },
+    "coordinate": {
+      "description": "En eller flera koordinater anges eller markeras.",
+      "examples": [
+        "(3, 2)",
+        "Markera punkten (-2, 4)."
+      ],
+      "answerFormats": [
+        "coordinatePair",
+        "multipleCoordinates",
+        "graphClick"
+      ]
+    },
+    "graph": {
+      "description": "En punkt, linje, kurva eller graf ska ritas eller identifieras.",
+      "examples": [
+        "Rita y = 2x + 1.",
+        "Markera linjens skärning med y-axeln."
+      ],
+      "answerFormats": [
+        "graphLine",
+        "graphPoints",
+        "graphFunction"
+      ]
+    }
+  },
+  "_answerFormatDefinitions": {
+    "integer": {
+      "example": "125",
+      "storedAs": "number"
+    },
+    "decimal": {
+      "example": "3,75",
+      "storedAs": "number"
+    },
+    "fraction": {
+      "example": "3/4",
+      "storedAs": "structuredNumber"
+    },
+    "power": {
+      "example": "2^5",
+      "storedAs": "expression"
+    },
+    "percent": {
+      "example": "25 %",
+      "storedAs": "number"
+    },
+    "scientificNotation": {
+      "example": "3,2 · 10^5",
+      "storedAs": "expression"
+    },
+    "integerWithUnit": {
+      "example": "10 cm",
+      "storedAs": "numberAndUnit"
+    },
+    "decimalWithUnit": {
+      "example": "2,5 kg",
+      "storedAs": "numberAndUnit"
+    },
+    "fractionWithUnit": {
+      "example": "1/2 liter",
+      "storedAs": "numberAndUnit"
+    },
+    "percentWithUnit": {
+      "example": "12 % rabatt",
+      "storedAs": "numberAndUnit"
+    },
+    "exactText": {
+      "example": "triangel",
+      "storedAs": "string"
+    },
+    "acceptedTexts": {
+      "example": [
+        "triangel",
+        "en triangel"
+      ],
+      "storedAs": "stringArray"
+    },
+    "caseInsensitiveText": {
+      "example": "Parallell",
+      "storedAs": "string"
+    },
+    "singleOption": {
+      "example": "option-2",
+      "storedAs": "optionId"
+    },
+    "multipleOptions": {
+      "example": [
+        "option-1",
+        "option-3"
+      ],
+      "storedAs": "optionIdArray"
+    },
+    "orderedOptions": {
+      "example": [
+        "option-2",
+        "option-1",
+        "option-3"
+      ],
+      "storedAs": "optionIdArray"
+    },
+    "matchedPairs": {
+      "example": [
+        {
+          "left": "25 %",
+          "right": "0,25"
+        }
+      ],
+      "storedAs": "pairArray"
+    },
+    "exactExpression": {
+      "example": "2x+4",
+      "storedAs": "expression"
+    },
+    "equivalentExpression": {
+      "example": "2(x+2)",
+      "storedAs": "expression"
+    },
+    "coordinatePair": {
+      "example": {
+        "x": 3,
+        "y": 2
+      },
+      "storedAs": "coordinate"
+    },
+    "multipleCoordinates": {
+      "example": [
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 3,
+          "y": 4
+        }
+      ],
+      "storedAs": "coordinateArray"
+    },
+    "graphClick": {
+      "example": {
+        "x": -2,
+        "y": 4
+      },
+      "storedAs": "coordinate"
+    },
+    "graphLine": {
+      "example": {
+        "slope": 2,
+        "intercept": 1
+      },
+      "storedAs": "line"
+    },
+    "graphPoints": {
+      "example": [
+        {
+          "x": 0,
+          "y": 1
+        },
+        {
+          "x": 1,
+          "y": 3
+        }
+      ],
+      "storedAs": "coordinateArray"
+    },
+    "graphFunction": {
+      "example": "y=2x+1",
+      "storedAs": "expression"
+    }
+  },
+  "_generatorTypes": {
+    "addition": {
+      "description": "Genererar additionsuppgifter.",
+      "typicalParameters": [
+        "termCount",
+        "min",
+        "max",
+        "allowDecimals",
+        "allowNegative"
+      ]
+    },
+    "subtraction": {
+      "description": "Genererar subtraktionsuppgifter.",
+      "typicalParameters": [
+        "minuendMin",
+        "minuendMax",
+        "subtrahendMin",
+        "subtrahendMax",
+        "allowNegativeResult"
+      ]
+    },
+    "multiplication": {
+      "description": "Genererar multiplikationsuppgifter.",
+      "typicalParameters": [
+        "factors",
+        "randomizeFactorOrder"
+      ]
+    },
+    "division": {
+      "description": "Genererar divisionsuppgifter.",
+      "typicalParameters": [
+        "dividendMin",
+        "dividendMax",
+        "divisors",
+        "integerResultOnly",
+        "allowRemainder"
+      ]
+    },
+    "mixedCalculation": {
+      "description": "Blandar flera räknesätt.",
+      "typicalParameters": [
+        "operations",
+        "min",
+        "max",
+        "termCount"
+      ]
+    },
+    "powers": {
+      "description": "Genererar potensuppgifter.",
+      "typicalParameters": [
+        "baseMin",
+        "baseMax",
+        "exponentMin",
+        "exponentMax"
+      ]
+    },
+    "roots": {
+      "description": "Genererar uppgifter med rötter.",
+      "typicalParameters": [
+        "rootType",
+        "resultMin",
+        "resultMax",
+        "integerResultOnly"
+      ]
+    },
+    "fractions": {
+      "description": "Genererar beräkningar med bråk.",
+      "typicalParameters": [
+        "operations",
+        "numeratorMin",
+        "numeratorMax",
+        "denominatorMin",
+        "denominatorMax",
+        "requireSimplifiedAnswer"
+      ]
+    },
+    "fractionComparison": {
+      "description": "Genererar jämförelser mellan bråk.",
+      "typicalParameters": [
+        "fractionCount",
+        "numeratorMin",
+        "numeratorMax",
+        "denominatorMin",
+        "denominatorMax"
+      ]
+    },
+    "decimals": {
+      "description": "Genererar uppgifter med decimaltal.",
+      "typicalParameters": [
+        "operations",
+        "min",
+        "max",
+        "decimalPlaces"
+      ]
+    },
+    "percent": {
+      "description": "Genererar procentuppgifter.",
+      "typicalParameters": [
+        "scenario",
+        "percentValues",
+        "wholeMin",
+        "wholeMax"
+      ]
+    },
+    "equation": {
+      "description": "Genererar ekvationer.",
+      "typicalParameters": [
+        "equationForm",
+        "solutionMin",
+        "solutionMax",
+        "coefficientMin",
+        "coefficientMax"
+      ]
+    },
+    "formulaSubstitution": {
+      "description": "Genererar insättning i formler.",
+      "typicalParameters": [
+        "formula",
+        "variables",
+        "solveFor"
+      ]
+    },
+    "geometry": {
+      "description": "Genererar geometriska beräkningar.",
+      "typicalParameters": [
+        "shapeTypes",
+        "calculation",
+        "dimensionMin",
+        "dimensionMax",
+        "units"
+      ]
+    },
+    "angleCalculation": {
+      "description": "Genererar vinkeluppgifter.",
+      "typicalParameters": [
+        "angleTypes",
+        "min",
+        "max",
+        "integerAnglesOnly"
+      ]
+    },
+    "statistics": {
+      "description": "Genererar statistikuppgifter.",
+      "typicalParameters": [
+        "measures",
+        "dataCount",
+        "valueMin",
+        "valueMax"
+      ]
+    },
+    "probability": {
+      "description": "Genererar sannolikhetsuppgifter.",
+      "typicalParameters": [
+        "experimentTypes",
+        "outcomeCount",
+        "questionModes"
+      ]
+    },
+    "coordinatePlane": {
+      "description": "Genererar koordinatuppgifter.",
+      "typicalParameters": [
+        "xMin",
+        "xMax",
+        "yMin",
+        "yMax",
+        "taskModes"
+      ]
+    },
+    "graphInterpretation": {
+      "description": "Genererar frågor om grafer.",
+      "typicalParameters": [
+        "graphTypes",
+        "taskModes",
+        "xRange",
+        "yRange"
+      ]
+    },
+    "wordProblem": {
+      "description": "Genererar textuppgifter från mallar.",
+      "typicalParameters": [
+        "templates",
+        "operations",
+        "contexts",
+        "numberRanges"
+      ]
+    },
+    "staticQuestionBank": {
+      "description": "Väljer färdigskrivna frågor från en frågebank.",
+      "typicalParameters": [
+        "questions",
+        "selectionMode",
+        "avoidDuplicates"
+      ]
+    }
+  },
+  "_completeExamples": {
+    "numeric": {
+      "question": {
+        "type": "numeric",
+        "prompt": "Beräkna {{factor1}} × {{factor2}}.",
+        "answer": {
+          "format": "integer",
+          "acceptedFormats": [
+            "integer"
+          ]
+        }
+      },
+      "generator": {
+        "type": "multiplication",
+        "parameters": {
+          "factors": [
+            {
+              "type": "randomInteger",
+              "min": 0,
+              "max": 100000
+            },
+            {
+              "type": "randomChoice",
+              "values": [
+                10,
+                100,
+                1000
+              ]
+            }
+          ],
+          "randomizeFactorOrder": true
+        }
+      }
+    },
+    "numericWithUnit": {
+      "question": {
+        "type": "numericWithUnit",
+        "prompt": "Hur lång är sträckan?",
+        "answer": {
+          "format": "decimalWithUnit",
+          "acceptedFormats": [
+            "integerWithUnit",
+            "decimalWithUnit"
+          ],
+          "unit": "cm",
+          "acceptedUnits": [
+            "cm"
+          ],
+          "allowSpaceBeforeUnit": true
+        }
+      },
+      "generator": {
+        "type": "geometry",
+        "parameters": {
+          "shapeTypes": [
+            "lineSegment"
+          ],
+          "lengthMin": 1,
+          "lengthMax": 20,
+          "units": [
+            "cm"
+          ]
+        }
+      }
+    },
+    "text": {
+      "question": {
+        "type": "text",
+        "prompt": "Vad kallas en fyrhörning med fyra lika långa sidor och fyra räta vinklar?",
+        "answer": {
+          "format": "acceptedTexts",
+          "acceptedValues": [
+            "kvadrat",
+            "en kvadrat"
+          ],
+          "caseSensitive": false,
+          "trimWhitespace": true
+        }
+      },
+      "generator": {
+        "type": "staticQuestionBank",
+        "parameters": {
+          "selectionMode": "random",
+          "avoidDuplicates": true
+        }
+      }
+    },
+    "singleChoice": {
+      "question": {
+        "type": "singleChoice",
+        "prompt": "Vilket tal är ett primtal?",
+        "answer": {
+          "format": "singleOption",
+          "selectionMode": "single"
+        }
+      },
+      "generator": {
+        "type": "staticQuestionBank",
+        "parameters": {
+          "optionCount": 4,
+          "shuffleOptions": true
+        }
+      }
+    },
+    "multipleChoice": {
+      "question": {
+        "type": "multipleChoice",
+        "prompt": "Vilka tal är jämna?",
+        "answer": {
+          "format": "multipleOptions",
+          "selectionMode": "multiple",
+          "requireExactSelection": true
+        }
+      },
+      "generator": {
+        "type": "staticQuestionBank",
+        "parameters": {
+          "optionCount": 4,
+          "shuffleOptions": true,
+          "minimumCorrectOptions": 1
+        }
+      }
+    },
+    "ordering": {
+      "question": {
+        "type": "ordering",
+        "prompt": "Sortera talen från minst till störst.",
+        "answer": {
+          "format": "orderedOptions"
+        }
+      },
+      "generator": {
+        "type": "staticQuestionBank",
+        "parameters": {
+          "itemCount": 4,
+          "shuffleOptions": true
+        }
+      }
+    },
+    "matching": {
+      "question": {
+        "type": "matching",
+        "prompt": "Para ihop procentform och decimalform.",
+        "answer": {
+          "format": "matchedPairs"
+        }
+      },
+      "generator": {
+        "type": "percent",
+        "parameters": {
+          "pairCount": 4,
+          "percentValues": [
+            10,
+            20,
+            25,
+            50,
+            75
+          ]
+        }
+      }
+    },
+    "expression": {
+      "question": {
+        "type": "expression",
+        "prompt": "Skriv ett uttryck för dubbla talet x plus 4.",
+        "answer": {
+          "format": "equivalentExpression",
+          "acceptedFormats": [
+            "exactExpression",
+            "equivalentExpression"
+          ]
+        }
+      },
+      "generator": {
+        "type": "staticQuestionBank",
+        "parameters": {
+          "selectionMode": "random"
+        }
+      }
+    },
+    "coordinate": {
+      "question": {
+        "type": "coordinate",
+        "prompt": "Ange punktens koordinater.",
+        "answer": {
+          "format": "coordinatePair"
+        }
+      },
+      "generator": {
+        "type": "coordinatePlane",
+        "parameters": {
+          "xMin": -10,
+          "xMax": 10,
+          "yMin": -10,
+          "yMax": 10,
+          "taskModes": [
+            "readCoordinate"
+          ]
+        }
+      }
+    },
+    "graph": {
+      "question": {
+        "type": "graph",
+        "prompt": "Rita grafen y = 2x + 1.",
+        "answer": {
+          "format": "graphLine"
+        }
+      },
+      "generator": {
+        "type": "graphInterpretation",
+        "parameters": {
+          "graphTypes": [
+            "linear"
+          ],
+          "taskModes": [
+            "drawGraph"
+          ],
+          "slopeMin": -5,
+          "slopeMax": 5,
+          "interceptMin": -10,
+          "interceptMax": 10
+        }
+      }
+    }
+  }
+}
