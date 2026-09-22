@@ -52,7 +52,10 @@ document.addEventListener('DOMContentLoaded', function(){
           var genPath1 = '/assets/js/generators/' + gtype + '.js';
           var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
           // try genPath1, if it fails try genPath2
-          return loadScript(genPath1).catch(function(){ return loadScript(genPath2); }).then(function(){ return cfg; });
+          // also try a fallback that maps e.g. 'multiplication-decimal-by-10-100-1000' -> 'multiplication-decimal-generator'
+          var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
+          var genPath3 = '/assets/js/generators/' + fallbackBase + '.js';
+          return loadScript(genPath1).catch(function(){ return loadScript(genPath2); }).catch(function(){ return loadScript(genPath3); }).then(function(){ return cfg; });
         }
         return cfg;
       }).then(function(cfg){
