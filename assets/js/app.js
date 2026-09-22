@@ -48,9 +48,11 @@ document.addEventListener('DOMContentLoaded', function(){
       }).then(function(cfg){
         var gtype = cfg && cfg.generator && cfg.generator.type;
         if(gtype){
-          // map generator type to expected script path
-          var genPath = '/assets/js/generators/' + gtype + '.js';
-          return loadScript(genPath).then(function(){ return cfg; });
+          // map generator type to expected script path. Try both exact name and with '-generator' suffix
+          var genPath1 = '/assets/js/generators/' + gtype + '.js';
+          var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
+          // try genPath1, if it fails try genPath2
+          return loadScript(genPath1).catch(function(){ return loadScript(genPath2); }).then(function(){ return cfg; });
         }
         return cfg;
       }).then(function(cfg){
