@@ -173,11 +173,11 @@
                 var calcGrid = document.querySelector('.calc-grid');
                 if(calcGrid){
                   var svarBtn = calcGrid.querySelector('button.btn-primary');
-                  var alwaysRequireSubmit = false;
-                  // Exercise-level override from JSON: question.multipleAnswersPossible
-                  if(this.config && this.config.question && this.config.question.multipleAnswersPossible){ alwaysRequireSubmit = true; }
-                  // Per-question override set by generator: q.multiplePossible
-                  if(q && q.multiplePossible){ alwaysRequireSubmit = true; }
+                  // Decide submit visibility based on exercise-level setting only.
+                  // If the exercise indicates multiple answers may be possible anywhere,
+                  // always show the Svar button. Per-question flags should not affect
+                  // visibility of the global submit button.
+                  var alwaysRequireSubmit = !!(this.config && this.config.question && this.config.question.multipleAnswersPossible);
                   if(qtype === 'multiple-choice'){
                     if(alwaysRequireSubmit){ if(svarBtn) svarBtn.style.display = ''; }
                     else { if(svarBtn) svarBtn.style.display = 'none'; }
