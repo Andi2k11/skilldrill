@@ -19,6 +19,15 @@
     this.selectors = containerSelectors || { question: '.question-card .question-text', title: '.question-card .question-title', input: '#answer-input' };
   }
 
+  function shuffle(array){
+    var a = array.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
   Runner.prototype.load = function(exerciseJsonPath){
     var self = this;
     return loadJSON(exerciseJsonPath).then(function(cfg){
@@ -85,6 +94,12 @@
           // clear existing
           answerCard.innerHTML = '';
           var opts = q.options || (this.config.question.answer && this.config.question.answer.options) || [];
+          // shuffle answers unless the exercise explicitly disables it
+          var shouldShuffle = true;
+          if(this.config && this.config.question && typeof this.config.question.shuffleAnswers !== 'undefined'){
+            shouldShuffle = !!this.config.question.shuffleAnswers;
+          }
+          if(shouldShuffle){ opts = shuffle(opts); }
           var btnGroup = document.createElement('div');
           btnGroup.className = 'd-flex flex-wrap gap-2 multiple-select-group';
           opts.forEach(function(opt){

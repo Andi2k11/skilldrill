@@ -6,16 +6,15 @@ window.divisibilityGenerators['divisibility-rules'] = (function () {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  // shuffle helper retained for potential runner use but generator doesn't call it anymore
   function shuffle(array) {
     var a = array.slice();
-
     for (var i = a.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var tmp = a[i];
       a[i] = a[j];
       a[j] = tmp;
     }
-
     return a;
   }
 
@@ -49,7 +48,6 @@ window.divisibilityGenerators['divisibility-rules'] = (function () {
         }
 
         var opts = divisors.map(String);
-        if (shuffleAnswers) opts = shuffle(opts);
 
         questions.push({
           number: number,
