@@ -182,10 +182,11 @@ body{
 /* Exact iPad-like size when viewport is similar to iPad Air in landscape (approx 820-1300px wide) */
 @media (min-width:820px) and (max-width:1300px){
   .device-card{
-    width:1180px;
-    height:820px;
-    max-width:96vw;
-    aspect-ratio: auto; /* use explicit height/width */
+    /* Keep iPad Air proportions while constraining to viewport */
+    width: min(1180px, 96vw);
+    aspect-ratio: 1180 / 820;
+    height: auto;
+    max-height: 92vh;
   }
 }
 
