@@ -50,11 +50,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
       var loadPromise;
       if(path){
+        console.debug('[app] loading direct path:', path);
         loadPromise = ensureLoad(path).then(function(cfg){ return { cfg: cfg, path: path }; });
       } else {
-        loadPromise = fetch('exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
+        console.debug('[app] resolving via manifest or fallback for:', ex);
+        loadPromise = fetch('exercises/manifest.json').then(function(r){ console.debug('[app] manifest fetch url:', r.url, 'status:', r.status); if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
           var entry = (man || []).find(function(it){ return it.id === ex || it.slug === ex; });
-          if(entry && entry.path) return ensureLoad(entry.path).then(function(cfg){ return { cfg: cfg, path: entry.path }; });
+          if(entry && entry.path){ console.debug('[app] manifest matched entry:', entry); return ensureLoad(entry.path).then(function(cfg){ return { cfg: cfg, path: entry.path }; }); }
+          console.debug('[app] manifest did not match, falling back to exercises/' + ex + '.json');
           return ensureLoad('exercises/' + ex + '.json').then(function(cfg){ return { cfg: cfg, path: 'exercises/' + ex + '.json' }; });
         });
       }
@@ -62,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function(){
       loadPromise.then(function(res){
         var cfg = res.cfg;
         path = res.path;
+        console.debug('[app] resolved exercise path ->', path);
         var gtype = cfg && cfg.generator && cfg.generator.type;
         if(gtype){
           var genExact = 'assets/js/generators/gen-' + gtype + '.js';
