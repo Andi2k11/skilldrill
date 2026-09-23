@@ -87,6 +87,30 @@
       }catch(e){ qs.textContent = q.text; }
     }
     if(qt) qt.textContent = taskTitle;
+    // If question provides an inline SVG visual, render it into the UI.
+    try{
+      if(q.visual && q.visual.type === 'svg'){
+        // prefer explicit svg content, fallback to q.svg
+        var svgHtml = q.visual.content || q.svg || '';
+        // find or create a container for visuals
+        var visualContainer = document.querySelector('.question-visual');
+        if(!visualContainer){
+          visualContainer = document.createElement('div');
+          visualContainer.className = 'question-visual mb-3';
+          // insert after the title if possible, else before the question text
+          if(qt && qt.parentNode){ qt.parentNode.insertBefore(visualContainer, qt.nextSibling); }
+          else if(qs && qs.parentNode){ qs.parentNode.insertBefore(visualContainer, qs); }
+          else { if(qs) qs.parentNode.appendChild(visualContainer); }
+        }
+        // If the exercise JSON used a source placeholder like "{{svg}}", the generator
+        // typically places the SVG string on `q.svg` or `q.visual.content`.
+        if(svgHtml){
+          visualContainer.innerHTML = svgHtml;
+        } else {
+          visualContainer.innerHTML = '';
+        }
+      }
+    }catch(e){ /* ignore visual rendering errors */ }
     // Render answer controls depending on question type
     try{
       if(this.config && this.config.question && this.config.question.type === 'multiple-select'){
