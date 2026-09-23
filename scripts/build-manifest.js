@@ -15,7 +15,11 @@ function readExercises(){
 }
 
 function buildManifest(exs){
-  const manifest = exs.map(e=>({ id: e.id, title: e.title, book: e.book, chapter: e.chapter, path: 'exercises/'+e._file }));
+  const manifest = exs.map(e=>{
+    const filename = e._file;
+    const slug = filename.replace(/\.json$/i,'');
+    return { id: e.id, slug: slug, title: e.title, book: e.book, chapter: e.chapter, path: 'exercises/'+filename };
+  });
   fs.writeFileSync(path.join(exercisesDir,'manifest.json'), JSON.stringify(manifest,null,2),'utf8');
   return manifest;
 }
