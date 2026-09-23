@@ -93,7 +93,7 @@ body{
   max-height: 120px; /* allow slightly larger rendering */
 }
 .question-card.has-visual .question-visual .visual-overlay-inner{
-  transform: scale(1.15); /* gentle visual "zoom in" without affecting layout */
+  transform: none; /* no visual transform to avoid changing layout */
   transform-origin: center top;
 }
 
