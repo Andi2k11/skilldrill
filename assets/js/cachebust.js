@@ -3,7 +3,8 @@
   try{
     var link = document.getElementById('site-css');
     if(!link) return;
-    var url = new URL(link.getAttribute('href'), location.origin);
+    // Resolve relative to current page so GitHub Pages subpath is preserved
+    var url = new URL(link.getAttribute('href'), location.href);
     var ts = new Date();
     var ver = ts.getFullYear().toString() + ('0'+(ts.getMonth()+1)).slice(-2) + ('0'+ts.getDate()).slice(-2) + 'T' + ('0'+ts.getHours()).slice(-2) + ('0'+ts.getMinutes()).slice(-2);
     url.searchParams.set('v', ver);
