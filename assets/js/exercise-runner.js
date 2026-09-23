@@ -84,18 +84,9 @@
         } else {
           qs.textContent = q.text;
         }
-        }catch(e){ qs.textContent = q.text; }
+      }catch(e){ qs.textContent = q.text; }
     }
     if(qt) qt.textContent = taskTitle;
-    // If this question provides an inline SVG visual, hide the textual question
-    // (we want title + tallinje only). Otherwise ensure question text is visible.
-    try{
-      if(q.visual && q.visual.type === 'svg'){
-        if(qs){ qs.style.display = 'none'; }
-      } else {
-        if(qs){ qs.style.display = ''; }
-      }
-    }catch(e){}
     // If question provides an inline SVG visual, render it into the UI.
     try{
       if(q.visual && q.visual.type === 'svg'){
