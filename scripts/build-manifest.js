@@ -35,9 +35,10 @@ function buildHtml(manifest){
     Object.keys(byBook[book]).sort((a,b)=>a-b).forEach(ch=>{
       html += `<h3>Kapitel ${ch}</h3><div class="row">`;
       byBook[book][ch].forEach(item=>{
-        const url = `${item.path.replace(/\\/g,'/')}`;
-        const qr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}`;
-        html += `<div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h5 class="card-title">${item.title}</h5><p class="card-text"><a href="/${url}">Öppna</a></p><img src="${qr}" alt="QR for ${item.id}" /></div></div></div>`;
+        // Link should open the exercise viewer with a query param, not the raw JSON file.
+        const viewerUrl = `/?exercise=${encodeURIComponent(item.id)}`;
+        const qr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(viewerUrl)}`;
+        html += `<div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h5 class="card-title">${item.title}</h5><p class="card-text"><a target="_blank" rel="noopener noreferrer" href="${viewerUrl}">Öppna</a></p><img src="${qr}" alt="QR for ${item.id}" /></div></div></div>`;
       });
       html += `</div>`;
     });
