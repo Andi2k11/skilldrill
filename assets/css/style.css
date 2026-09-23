@@ -42,6 +42,24 @@ body{
 
 .question-card .card-body{padding:1rem;}
 
+/* Ensure inline SVG visuals scale to fit the question card without creating scrollbars */
+.question-card .question-visual{
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0;
+}
+.question-card .question-visual svg{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100% - 8px);
+  display: block;
+}
+
 /* Layout for sub-cards inside question-card */
 .sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;box-sizing:border-box;gap:1rem;padding-right:1rem;flex:1}
 .sub-card-left{flex:0 0 60%;display:flex;flex-direction:column}
