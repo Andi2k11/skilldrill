@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
     // read exercise parameter from URL: ?exercise=path-or-id
     var params = new URLSearchParams(location.search);
     var ex = params.get('exercise');
-    var defaultPath = '/exercises/multiplication-by-10-100-1000.json';
+    var defaultPath = 'exercises/multiplication-by-10-100-1000.json';
     var path = defaultPath;
 
     if(!ex){
@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function(){
       if(path){
         loadPromise = ensureLoad(path).then(function(cfg){ return { cfg: cfg, path: path }; });
       } else {
-        loadPromise = fetch('/exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
+        loadPromise = fetch('exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
           var entry = (man || []).find(function(it){ return it.id === ex || it.slug === ex; });
-          if(entry && entry.path) return ensureLoad('/' + entry.path).then(function(cfg){ return { cfg: cfg, path: '/' + entry.path }; });
-          return ensureLoad('/exercises/' + ex + '.json').then(function(cfg){ return { cfg: cfg, path: '/exercises/' + ex + '.json' }; });
+          if(entry && entry.path) return ensureLoad(entry.path).then(function(cfg){ return { cfg: cfg, path: entry.path }; });
+          return ensureLoad('exercises/' + ex + '.json').then(function(cfg){ return { cfg: cfg, path: 'exercises/' + ex + '.json' }; });
         });
       }
 
@@ -64,12 +64,12 @@ document.addEventListener('DOMContentLoaded', function(){
         path = res.path;
         var gtype = cfg && cfg.generator && cfg.generator.type;
         if(gtype){
-          var genExact = '/assets/js/generators/gen-' + gtype + '.js';
-          var genPath1 = '/assets/js/generators/' + gtype + '.js';
-          var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
-          var genPathGenSuffix = '/assets/js/generators/' + gtype + '-gen.js';
+          var genExact = 'assets/js/generators/gen-' + gtype + '.js';
+          var genPath1 = 'assets/js/generators/' + gtype + '.js';
+          var genPath2 = 'assets/js/generators/' + gtype + '-generator.js';
+          var genPathGenSuffix = 'assets/js/generators/' + gtype + '-gen.js';
           var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
-          var genPathFallback = '/assets/js/generators/' + fallbackBase + '.js';
+          var genPathFallback = 'assets/js/generators/' + fallbackBase + '.js';
           return loadScript(genExact)
             .catch(function(){ return loadScript(genPath1); })
             .catch(function(){ return loadScript(genPath2); })
