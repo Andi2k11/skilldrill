@@ -1,0 +1,46 @@
+{
+  "id": "md7-k1-place-value-mixed",
+  "title": "Siffrans platsvärde (heltal och decimaltal)",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avgör vilket platsvärde en markerad siffra har. Uppgifterna växlar mellan femsiffriga heltal och femsiffriga decimaltal.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "multiple-choice",
+    "title": "Vilket platsvärde har siffran?",
+    "prompt": "Vilket platsvärde har siffran {{digit}} i talet {{numberDisplay}}?",
+    "answer": {
+      "options": [
+        "ental",
+        "tiotal",
+        "hundratal",
+        "tusental",
+        "tiondel",
+        "hundradel",
+        "tusendel"
+      ]
+    }
+  },
+  "generator": {
+    "type": "place-value-mixed",
+    "script": "gen-place-value-mixed.js",
+    "parameters": {
+      "questionCount": 15,
+      "integerPositions": [
+        "ones",
+        "tens",
+        "hundreds",
+        "thousands"
+      ],
+      "decimalPositions": [
+        "ones",
+        "tenths",
+        "hundredths",
+        "thousandths"
+      ]
+    }
+  }
+}

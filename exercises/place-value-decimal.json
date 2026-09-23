@@ -1,0 +1,37 @@
+{
+  "id": "md7-k1-place-value-decimal",
+  "title": "Siffrans platsvärde (decimaltal)",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avgör vilket platsvärde en markerad siffra har i ett femsiffrigt decimaltal mindre än 10 där alla siffror är olika.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "multiple-choice",
+    "title": "Vilket platsvärde har siffran?",
+    "prompt": "Vilket platsvärde har siffran {{digit}} i talet {{numberDisplay}}?",
+    "answer": {
+      "options": [
+        "ental",
+        "tiondel",
+        "hundradel",
+        "tusendel"
+      ]
+    }
+  },
+  "generator": {
+    "type": "place-value-decimal",
+    "script": "gen-place-value-decimal.js",
+    "parameters": {
+      "questionCount": 15,
+      "positions": [
+        "ones",
+        "tenths",
+        "hundredths",
+        "thousandths"
+      ]
+    }
+  }
+}

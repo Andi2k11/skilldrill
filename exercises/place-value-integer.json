@@ -1,0 +1,39 @@
+{
+  "id": "md7-k1-place-value-integer",
+  "title": "Siffrans platsvärde (heltal)",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avgör vilket platsvärde en markerad siffra har i ett femsiffrigt heltal där alla siffror är olika.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "multiple-choice",
+    "title": "Vilket platsvärde har siffran?",
+    "prompt": "Vilket platsvärde har siffran {{digit}} i talet {{numberDisplay}}?",
+    "answer": {
+      "options": [
+        "ental",
+        "tiotal",
+        "hundratal",
+        "tusental"
+      ]
+    }
+  },
+  "generator": {
+    "type": "place-value-integer",
+    "script": "gen-place-value-integer.js",
+    "parameters": {
+      "questionCount": 15,
+      "min": 10000,
+      "max": 99999,
+      "positions": [
+        "ones",
+        "tens",
+        "hundreds",
+        "thousands"
+      ]
+    }
+  }
+}
