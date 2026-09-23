@@ -48,7 +48,7 @@ window.divisibilityGenerators['divisibility-rules'] = (function () {
 
         questions.push({
           number: number,
-          text: 'Vilka delbarhetsregler fungerar på talet ' + number + '?',
+          text: number,
           options: shuffle(divisors.map(String)),
           answer: correctAnswers
         });
