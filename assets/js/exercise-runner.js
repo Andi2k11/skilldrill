@@ -35,7 +35,7 @@
       var gtype = cfg.generator && cfg.generator.type;
       // look up generator in known registries; include roundingGenerators and any other registries present
       var gen = null;
-      var registries = [ 'multiplicationGenerators', 'divisionGenerators', 'roundingGenerators', 'divisibilityGenerators' ];
+      var registries = [ 'multiplicationGenerators', 'divisionGenerators', 'roundingGenerators', 'divisibilityGenerators', 'placeValueGenerators' ];
       for(var i=0;i<registries.length && !gen;i++){
         var r = window[registries[i]];
         if(r && r[gtype]) gen = r[gtype];
@@ -52,6 +52,16 @@
       }
       if(!gen) throw new Error('Generator not found: '+gtype);
       self.questions = gen.generate(cfg.generator.parameters || {});
+      // If config.question.type is multiple-select but generator provided a single correct answer
+      // normalize question type per-question so UI can treat it as single-choice.
+      if(self.config && self.config.question && self.config.question.type === 'multiple-select'){
+        self.questions.forEach(function(q){
+          var ans = q.answer;
+          if(typeof ans === 'string' || (Array.isArray(ans) && ans.length===1)){
+            q._renderType = 'multiple-choice';
+          }
+        });
+      }
       self.index = 0;
       self.correctCount = 0;
       self.ended = false;
@@ -126,7 +136,12 @@
     }catch(e){ /* ignore visual rendering errors */ }
     // Render answer controls depending on question type
     try{
-      if(this.config && this.config.question && this.config.question.type === 'multiple-select'){
+      var qtype = (this.config && this.config.question && this.config.question.type) || '';
+      // allow per-question override set during load
+      if(this.questions[this.index] && this.questions[this.index]._renderType){
+        qtype = this.questions[this.index]._renderType;
+      }
+      if(qtype === 'multiple-select' || qtype === 'multiple-choice'){
         if(answerCard){
           // clear existing
           answerCard.innerHTML = '';
@@ -145,9 +160,22 @@
             b.className = 'btn btn-outline-primary ms-option';
             b.textContent = opt;
             b.setAttribute('data-option', opt);
+            if(qtype === 'multiple-choice') b.classList.add('single-choice');
             btnGroup.appendChild(b);
           });
           answerCard.appendChild(btnGroup);
+          // if this is single-choice, hide the main Svar button to avoid confusion
+          try{
+            var calcGrid = document.querySelector('.calc-grid');
+            if(calcGrid){
+              var svarBtn = calcGrid.querySelector('button.btn-primary');
+              if(qtype === 'multiple-choice'){
+                if(svarBtn) svarBtn.style.display = 'none';
+              } else {
+                if(svarBtn) svarBtn.style.display = '';
+              }
+            }
+          }catch(e){}
           // normalize widths: set all buttons to the width of the widest button
           try{
             var tempBtns = Array.from(btnGroup.querySelectorAll('button'));
@@ -182,7 +210,14 @@
       answerCard.addEventListener('click', function(ev){
         var btn = ev.target.closest('button.ms-option');
         if(!btn) return;
-        btn.classList.toggle('active');
+        if(btn.classList.contains('single-choice')){
+          Array.from(answerCard.querySelectorAll('button.ms-option')).forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          // submit immediately for single-choice buttons
+          try{ self.submit(); }catch(e){}
+        } else {
+          btn.classList.toggle('active');
+        }
       });
     }
   };
@@ -191,12 +226,16 @@
     var q = this.questions[this.index];
     var qtype = (this.config && this.config.question && this.config.question.type) || '';
     var self = this;
-    if(qtype === 'multiple-select'){
+    if(qtype === 'multiple-select' || qtype === 'multiple-choice'){
       var answerCard = document.querySelector('.answer-card .card-body');
       if(!answerCard) return false;
       var btns = Array.from(answerCard.querySelectorAll('button.ms-option'));
       var selected = btns.filter(function(b){ return b.classList.contains('active'); }).map(function(b){ return b.getAttribute('data-option'); });
-      var correct = (q.answer || []).slice().map(String);
+      var correct = q.answer;
+      if(typeof correct === 'undefined' || correct === null) correct = [];
+      else if(typeof correct === 'string') correct = [correct];
+      else if(!Array.isArray(correct)) correct = [String(correct)];
+      correct = correct.slice().map(String);
       // determine correctness
       var allSelectedCorrect = selected.length > 0 && selected.every(function(s){ return correct.indexOf(s) !== -1; });
       var missed = correct.filter(function(c){ return selected.indexOf(c) === -1; });

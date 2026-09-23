@@ -28,6 +28,9 @@
     "path": "exercises/division-mixed-by-10-100-1000.json"
   },
   {
+    "path": "exercises/manifest.json"
+  },
+  {
     "id": "md7-k1-mult-10-100-1000",
     "title": "Multiplikation med 10, 100, 1000",
     "book": "Matte Direkt 7",

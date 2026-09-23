@@ -35,8 +35,17 @@ document.addEventListener('DOMContentLoaded', function(){
         s.src = src;
         s.async = false;
         s.onload = function(){ resolve(); };
-        s.onerror = function(e){ reject(new Error('Failed to load ' + src)); };
-        document.head.appendChild(s);
+            if(ex.indexOf('.json') !== -1 || ex.charAt(0) === '/'){
+              path = ex;
+            } else {
+              // try manifest lookup first for robust id -> file mapping
+              try{
+                // fetch manifest synchronously in promise chain below; mark path as placeholder
+                path = null;
+              }catch(e){
+                path = '/exercises/' + ex + '.json';
+              }
+            }
       });
     }
 
@@ -53,10 +62,44 @@ document.addEventListener('DOMContentLoaded', function(){
           var genExact = '/assets/js/generators/gen-' + gtype + '.js';
           var genPath1 = '/assets/js/generators/' + gtype + '.js';
           var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
-          var genPathGenSuffix = '/assets/js/generators/' + gtype + '-gen.js';
-          // also try a fallback that maps e.g. 'multiplication-decimal-by-10-100-1000' -> 'multiplication-decimal-generator'
-          var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
-          var genPathFallback = '/assets/js/generators/' + fallbackBase + '.js';
+            // If we have a concrete path already (user provided .json or absolute), use it.
+            var ensureLoad = function(p){
+              return fetch(p).then(function(res){ if(!res.ok) throw new Error('Failed to fetch exercise JSON'); return res.json(); });
+            };
+
+            var loadPromise;
+            if(path){
+              loadPromise = ensureLoad(path).then(function(cfg){ return { cfg: cfg, path: path }; });
+            } else {
+              // resolve via manifest
+              loadPromise = fetch('/exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
+                var entry = (man || []).find(function(it){ return it.id === ex; });
+                if(entry && entry.path) return ensureLoad('/' + entry.path).then(function(cfg){ return { cfg: cfg, path: '/' + entry.path }; });
+                // fallback to old mapping
+                return ensureLoad('/exercises/' + ex + '.json').then(function(cfg){ return { cfg: cfg, path: '/exercises/' + ex + '.json' }; });
+              });
+            }
+
+            loadPromise.then(function(res){
+              var cfg = res.cfg;
+              path = res.path;
+              var gtype = cfg && cfg.generator && cfg.generator.type;
+              if(gtype){
+                var genExact = '/assets/js/generators/gen-' + gtype + '.js';
+                var genPath1 = '/assets/js/generators/' + gtype + '.js';
+                var genPath2 = '/assets/js/generators/' + gtype + '-generator.js';
+                var genPathGenSuffix = '/assets/js/generators/' + gtype + '-gen.js';
+                var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
+                var genPathFallback = '/assets/js/generators/' + fallbackBase + '.js';
+                return loadScript(genExact)
+                  .catch(function(){ return loadScript(genPath1); })
+                  .catch(function(){ return loadScript(genPath2); })
+                  .catch(function(){ return loadScript(genPathGenSuffix); })
+                  .catch(function(){ return loadScript(genPathFallback); })
+                  .then(function(){ return cfg; });
+              }
+              return cfg;
+            }).then(function(cfg){
           return loadScript(genExact)
             .catch(function(){ return loadScript(genPath1); })
             .catch(function(){ return loadScript(genPath2); })
