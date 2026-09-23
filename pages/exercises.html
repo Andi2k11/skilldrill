@@ -40,6 +40,8 @@
               bbtn.setAttribute('aria-expanded','false'); bbtn.setAttribute('aria-controls', bookId + '-body');
               bbtn.appendChild(q(bookName)); bh.appendChild(bbtn); bookCard.appendChild(bh);
               var bbody = document.createElement('div'); bbody.id = bookId + '-body'; bbody.className='accordion-collapse collapse'; bbody.setAttribute('aria-labelledby', bookId + '-hdr');
+              // ensure only one book open at a time
+              bbody.setAttribute('data-bs-parent', '#exercises-accordion');
               var bbodyInner = document.createElement('div'); bbodyInner.className='accordion-body';
 
               // chapters accordion inside book
@@ -56,6 +58,8 @@
                 chBtn.setAttribute('aria-expanded','false'); chBtn.setAttribute('aria-controls', chId + '-body');
                 chBtn.appendChild(q('Kapitel ' + ch)); chHdr.appendChild(chBtn); chItem.appendChild(chHdr);
                 var chBody = document.createElement('div'); chBody.id = chId + '-body'; chBody.className='accordion-collapse collapse'; chBody.setAttribute('aria-labelledby', chId + '-hdr');
+                // ensure only one chapter open per book
+                chBody.setAttribute('data-bs-parent', '#' + chaptersAcc.id);
                 var chBodyInner = document.createElement('div'); chBodyInner.className='accordion-body';
 
                 // create table of exercises for this chapter
