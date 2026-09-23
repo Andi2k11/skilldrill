@@ -11,7 +11,8 @@
   "question": {
     "type": "multiple-select",
     "title": "Vilka delbarhetsregler fungerar?",
-    "prompt": "Vilka delbarhetsregler fungerar på talet {{number}}?",
+    "prompt": "{{number}}",
+    "shuffleAnswers": false,
     "answer": {
       "options": ["2", "3", "5", "10"]
     }
