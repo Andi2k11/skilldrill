@@ -106,6 +106,18 @@ body{
   display: inline-block; /* keep wrapper intrinsic so transform doesn't affect siblings */
 }
 
+/* Ensure SVG background shapes don't cover surrounding text. Some generators draw
+   a white rect as background inside the SVG — override common cases to be transparent. */
+.question-card.has-visual .question-visual svg rect,
+.question-card.has-visual .question-visual svg .bg,
+.question-card.has-visual .question-visual svg .background{
+  fill: none !important;
+}
+
+/* Keep the question title above the visual if the scaled visual extends upward */
+.question-card .question-title{ position: relative; z-index: 2; }
+.question-card .question-visual{ position: relative; z-index: 1; }
+
 /* Overlay for SVG visual: absolute positioned so transforms don't affect layout */
 .question-visual-overlay{
   position: absolute;
