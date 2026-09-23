@@ -107,30 +107,23 @@
         // If the exercise JSON used a source placeholder like "{{svg}}", the generator
         // typically places the SVG string on `q.svg` or `q.visual.content`.
         if(svgHtml){
-          visualContainer.innerHTML = svgHtml;
+          // keep the visual placeholder empty so SVG isn't duplicated under the text
+          visualContainer.innerHTML = '';
           // create an overlay for zooming without affecting layout
           var overlay = document.querySelector('.question-visual-overlay');
           if(!overlay){
             overlay = document.createElement('div');
             overlay.className = 'question-visual-overlay';
-            // zoom control
-            var zbtn = document.createElement('button');
-            zbtn.className = 'visual-zoom-btn';
-            zbtn.title = 'Zooma';
-            zbtn.innerHTML = '\uD83D\uDD0D';
-            zbtn.addEventListener('click', function(ev){
+            // overlay click toggles zoom
+            overlay.addEventListener('click', function(ev){
               ev.stopPropagation();
               overlay.classList.toggle('zoomed');
             });
-            overlay.appendChild(zbtn);
             // append overlay inside question card so it's positioned relatively
             if(questionCard) questionCard.appendChild(overlay);
           }
-          // put svg copy into overlay (use innerHTML to preserve markup)
-          // keep zoom button as first child
-          var existingBtn = overlay.querySelector('.visual-zoom-btn');
+          // put svg into overlay (single source of truth)
           overlay.innerHTML = '';
-          if(existingBtn) overlay.appendChild(existingBtn);
           var svgWrap = document.createElement('div'); svgWrap.className = 'visual-overlay-inner';
           svgWrap.innerHTML = svgHtml;
           overlay.appendChild(svgWrap);
