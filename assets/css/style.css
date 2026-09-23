@@ -38,9 +38,22 @@ body{
 .question-card{
   height: 40%;
   min-height: 120px;
+  box-sizing: border-box;
+  /* Prevent the question card from forcing the parent to grow */
+  flex: 0 0 40%;
+  max-height: 45%;
+  overflow: hidden;
 }
 
 .question-card .card-body{padding:1rem;}
+
+/* Ensure parent device card's card-body doesn't grow unexpectedly */
+.device-card > .card-body{
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* allow children to shrink */
+  overflow: hidden;
+}
 
 /* Ensure inline SVG visuals scale to fit the question card without creating scrollbars */
 .question-card .question-visual{
