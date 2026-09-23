@@ -341,6 +341,7 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         ? settings.startMax
         : 10;
 
+    // hundradelar: end should be start + 0.2, use tick scales 0.1 or 0.2 (i.e. 0.10/0.20)
     var range =
       typeof settings.range === 'number'
         ? settings.range
@@ -349,7 +350,7 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     var scales =
       settings.scales && settings.scales.length
         ? settings.scales
-        : [0.01, 0.02];
+        : [0.1, 0.2];
 
     var decimalPlaces = 2;
     var factor = 100;
