@@ -53,6 +53,10 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
 
   /**
    * Formaterar ett tal med svenskt decimaltecken.
+   *
+   * Exempel:
+   * 2.4 blir 2,4
+   * 3.05 blir 3,05
    */
   function formatSwedish(units, decimalPlaces) {
     var divisor = Math.pow(10, decimalPlaces);
@@ -67,12 +71,18 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
       .replace('.', ',');
   }
 
+  /**
+   * Kontrollerar om ett skalstreck ligger på ett heltal.
+   */
   function isWholeNumber(units, decimalPlaces) {
     var unitsPerWholeNumber = Math.pow(10, decimalPlaces);
 
     return units % unitsPerWholeNumber === 0;
   }
 
+  /**
+   * Skapar hela tallinjen som SVG.
+   */
   function createNumberLineSvg(settings) {
     var width = 800;
     var height = 230;
@@ -103,6 +113,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         'style="display:block;width:100%;height:auto;">'
     );
 
+    /*
+     * Vit bakgrund.
+     */
     svg.push(
       '<rect ' +
         'x="0" ' +
@@ -112,6 +125,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         'fill="#ffffff" />'
     );
 
+    /*
+     * Själva tallinjen.
+     */
     svg.push(
       '<line ' +
         'x1="' + left + '" ' +
@@ -123,6 +139,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         'stroke-linecap="round" />'
     );
 
+    /*
+     * Skalstreck.
+     */
     for (i = 0; i <= tickCount; i++) {
       var currentUnits = startUnits + i * stepUnits;
 
@@ -162,6 +181,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
       );
     }
 
+    /*
+     * Startvärde.
+     */
     svg.push(
       '<text ' +
         'x="' + left + '" ' +
@@ -177,6 +199,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
       '</text>'
     );
 
+    /*
+     * Slutvärde.
+     */
     svg.push(
       '<text ' +
         'x="' + right + '" ' +
@@ -192,11 +217,17 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
       '</text>'
     );
 
+    /*
+     * Beräknar pilens position.
+     */
     var targetX =
       left +
       ((targetUnits - startUnits) / totalUnits) *
         (right - left);
 
+    /*
+     * Pilens lodräta skaft.
+     */
     svg.push(
       '<line ' +
         'x1="' + targetX.toFixed(2) + '" ' +
@@ -208,6 +239,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         'stroke-linecap="round" />'
     );
 
+    /*
+     * Pilspets.
+     */
     svg.push(
       '<polygon ' +
         'points="' +
@@ -226,6 +260,13 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     return svg.join('');
   }
 
+  /**
+   * Skapar en fråga där startvärdet är ett heltal.
+   *
+   * Startvärde: 0 till 9
+   * Slutvärde: startvärdet + 2
+   * Skala: 0,1 eller 0,2
+   */
   function generateIntegerQuestion(parameters) {
     var settings = parameters.integerRange || {};
 
@@ -249,6 +290,13 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         ? settings.scales
         : [0.1, 0.2];
 
+    /*
+     * Alla värden räknas som tiondelar.
+     *
+     * Exempel:
+     * 4 representeras av 40.
+     * 4,1 representeras av 41.
+     */
     var decimalPlaces = 1;
     var factor = 10;
 
@@ -261,6 +309,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     var tickCount =
       Math.round((endUnits - startUnits) / stepUnits);
 
+    /*
+     * Pilen får inte hamna på start- eller slutvärdet.
+     */
     var targetIndex = randInt(1, tickCount - 1);
     var targetUnits =
       startUnits + targetIndex * stepUnits;
@@ -275,6 +326,13 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     });
   }
 
+  /**
+   * Skapar en fråga med ett startvärde angivet i tiondelar.
+   *
+   * Startvärde: 0,0 till 10,0
+   * Slutvärde: startvärdet + 2
+   * Skala: 0,1 eller 0,2
+   */
   function generateTenthsQuestion(parameters) {
     var settings = parameters.tenths || {};
 
@@ -328,6 +386,13 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     });
   }
 
+  /**
+   * Skapar en fråga med ett startvärde angivet i hundradelar.
+   *
+   * Startvärde: 0,00 till 10,00
+   * Slutvärde: startvärdet + 0,20
+   * Skala: 0,01 eller 0,02
+   */
   function generateHundredthsQuestion(parameters) {
     var settings = parameters.hundredths || {};
 
@@ -341,7 +406,6 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         ? settings.startMax
         : 10;
 
-    // hundradelar: end should be start + 0.2, use tick scales 0.1 or 0.2 (i.e. 0.10/0.20)
     var range =
       typeof settings.range === 'number'
         ? settings.range
@@ -350,7 +414,7 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     var scales =
       settings.scales && settings.scales.length
         ? settings.scales
-        : [0.1, 0.2];
+        : [0.01, 0.02];
 
     var decimalPlaces = 2;
     var factor = 100;
@@ -382,6 +446,9 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     });
   }
 
+  /**
+   * Skapar det färdiga frågeobjektet.
+   */
   function createQuestion(settings) {
     var factor = Math.pow(
       10,
@@ -398,7 +465,7 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
     return {
       type: settings.type,
 
-      text: '',
+      text: 'Vilket tal pekar pilen på?',
 
       prompt:
         'Skriv talet som den röda pilen pekar på.',
@@ -456,6 +523,10 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
               'hundredths'
             ];
 
+      /*
+       * Skapar en ordning där uppgiftstyperna
+       * fördelas så jämnt som möjligt.
+       */
       var typeOrder = [];
 
       while (typeOrder.length < questionCount) {
@@ -469,6 +540,10 @@ window.numberLineGenerators['number-line-arrow'] = (function () {
         questionCount
       );
 
+      /*
+       * Används för att undvika identiska frågor
+       * inom samma övningsomgång.
+       */
       var usedQuestions = {};
       var attempts = 0;
       var maximumAttempts = questionCount * 100;
