@@ -56,7 +56,7 @@ body{
 .question-card.has-visual .question-visual{
   box-sizing: border-box;
   max-height: 100%;
-  overflow: hidden;
+  overflow: visible; /* allow transform-scaled visuals to render without clipping */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,6 +83,7 @@ body{
   flex: 0 0 auto;
   /* tighter max-height to better match non-visual exercises */
   max-height: 25%;
+  overflow: visible; /* allow scaled content to extend visually without changing layout */
 }
 .question-card.has-visual .question-text{
   flex: 1 1 auto;
