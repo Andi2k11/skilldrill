@@ -92,6 +92,8 @@ body{
 /* further limit SVG rendering size so tall images don't change layout */
 .question-card.has-visual .question-visual .visual-overlay-inner svg{
   max-height: 80px;
+  width: auto; /* allow natural SVG width to apply */
+  max-width: 800px; /* allow wider number lines when there is horizontal space */
 }
 
 /* Apply a transform-based zoom to the visual wrapper so it appears larger
