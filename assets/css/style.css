@@ -39,10 +39,6 @@ body{
   height: 40%;
   min-height: 120px;
   box-sizing: border-box;
-  /* Prevent the question card from forcing the parent to grow */
-  flex: 0 0 40%;
-  max-height: 45%;
-  overflow: hidden;
 }
 
 .question-card .card-body{padding:1rem;}
@@ -56,7 +52,8 @@ body{
 }
 
 /* Ensure inline SVG visuals scale to fit the question card without creating scrollbars */
-.question-card .question-visual{
+/* Only apply constrained visual layout when .question-card has .has-visual */
+.question-card.has-visual .question-visual{
   box-sizing: border-box;
   max-height: 100%;
   overflow: hidden;
@@ -65,7 +62,7 @@ body{
   justify-content: center;
   padding: 0.25rem 0;
 }
-.question-card .question-visual svg{
+.question-card.has-visual .question-visual svg{
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -76,16 +73,17 @@ body{
 /* Prevent the visual from expanding the question card: make card body a column flex
    and constrain visual to a fraction of the question area while letting text/input
    use remaining space and scroll if needed. */
-.question-card .card-body{
+/* Only alter layout when a visual exists */
+.question-card.has-visual .card-body{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.question-card .question-visual{
+.question-card.has-visual .question-visual{
   flex: 0 0 auto;
   max-height: 45%;
 }
-.question-card .question-text{
+.question-card.has-visual .question-text{
   flex: 1 1 auto;
   overflow: auto;
 }

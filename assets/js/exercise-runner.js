@@ -89,7 +89,9 @@
     if(qt) qt.textContent = taskTitle;
     // If question provides an inline SVG visual, render it into the UI.
     try{
+      var questionCard = document.querySelector('.question-card');
       if(q.visual && q.visual.type === 'svg'){
+        if(questionCard) questionCard.classList.add('has-visual');
         // prefer explicit svg content, fallback to q.svg
         var svgHtml = q.visual.content || q.svg || '';
         // find or create a container for visuals
@@ -109,6 +111,11 @@
         } else {
           visualContainer.innerHTML = '';
         }
+      } else {
+        if(questionCard) questionCard.classList.remove('has-visual');
+        // ensure visual container removed when no visual
+        var existing = document.querySelector('.question-visual');
+        if(existing) existing.parentNode.removeChild(existing);
       }
     }catch(e){ /* ignore visual rendering errors */ }
     // Render answer controls depending on question type
