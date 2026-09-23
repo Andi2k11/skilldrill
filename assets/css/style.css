@@ -93,6 +93,15 @@ body{
   max-height: 80px;
 }
 
+/* Apply a transform-based zoom to the visual wrapper so it appears larger
+   without changing layout height (transform doesn't affect document flow). */
+.question-card.has-visual .question-visual .visual-overlay-inner{
+  transform-origin: center center;
+  transform: scale(1.4);
+  transition: transform 180ms ease;
+  display: inline-block; /* keep wrapper intrinsic so transform doesn't affect siblings */
+}
+
 /* Overlay for SVG visual: absolute positioned so transforms don't affect layout */
 .question-visual-overlay{
   position: absolute;
