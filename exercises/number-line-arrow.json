@@ -1,0 +1,65 @@
+{
+  "id": "md7-k1-number-line-arrow",
+  "title": "Vilket tal pekar pilen på?",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Läs av en tallinje och skriv talet som den röda pilen pekar på.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "numeric",
+    "title": "Vilket tal pekar pilen på?",
+    "prompt": "Skriv talet som den röda pilen pekar på.",
+    "visual": {
+      "type": "svg",
+      "source": "{{svg}}",
+      "alt": "Tallinje med en röd pil som pekar på ett skalstreck."
+    },
+    "answer": {
+      "format": "decimal",
+      "decimalSeparator": ",",
+      "allowInteger": true
+    }
+  },
+  "generator": {
+    "type": "number-line-arrow",
+    "script": "gen-number-line-arrow.js",
+    "parameters": {
+      "questionCount": 15,
+      "types": [
+        "integer-range",
+        "tenths",
+        "hundredths"
+      ],
+      "integerRange": {
+        "startMin": 0,
+        "startMax": 9,
+        "range": 2,
+        "scales": [
+          0.1,
+          0.2
+        ]
+      },
+      "tenths": {
+        "startMin": 0,
+        "startMax": 10,
+        "range": 2,
+        "scales": [
+          0.1,
+          0.2
+        ]
+      },
+      "hundredths": {
+        "startMin": 0,
+        "startMax": 10,
+        "range": 0.2,
+        "scales": [
+          0.01,
+          0.02
+        ]
+      }
+    }
+  }
+}
