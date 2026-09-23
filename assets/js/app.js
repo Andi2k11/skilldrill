@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function(){
             } else {
               // resolve via manifest
               loadPromise = fetch('/exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('Failed to fetch manifest'); return r.json(); }).then(function(man){
-                var entry = (man || []).find(function(it){ return it.id === ex; });
+                var entry = (man || []).find(function(it){ return it.id === ex || it.slug === ex; });
                 if(entry && entry.path) return ensureLoad('/' + entry.path).then(function(cfg){ return { cfg: cfg, path: '/' + entry.path }; });
                 // fallback to old mapping
                 return ensureLoad('/exercises/' + ex + '.json').then(function(cfg){ return { cfg: cfg, path: '/exercises/' + ex + '.json' }; });
