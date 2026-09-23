@@ -42,13 +42,17 @@ body{
 
 .question-card .card-body{padding:1rem;}
 
+/* Prevent the question card body from showing its own scrollbar and
+  ensure visual content is anchored to the top to avoid empty vertical gaps */
+.question-card .card-body{overflow: hidden;}
+
 /* Ensure inline SVG visuals scale to fit the question card without creating scrollbars */
 .question-card .question-visual{
   box-sizing: border-box;
   max-height: 100%;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 0.25rem 0;
 }
@@ -56,7 +60,8 @@ body{
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: calc(100% - 8px);
+  /* allow SVG to scale naturally; limit its displayed height to avoid overflow */
+  max-height: 60vh;
   display: block;
 }
 
