@@ -90,11 +90,7 @@ body{
 }
 /* further limit SVG rendering size so tall images don't change layout */
 .question-card.has-visual .question-visual .visual-overlay-inner svg{
-  max-height: 120px; /* allow slightly larger rendering */
-}
-.question-card.has-visual .question-visual .visual-overlay-inner{
-  transform: none; /* no visual transform to avoid changing layout */
-  transform-origin: center top;
+  max-height: 80px;
 }
 
 /* Overlay for SVG visual: absolute positioned so transforms don't affect layout */
