@@ -74,11 +74,10 @@ document.addEventListener('DOMContentLoaded', function(){
           var genPathGenSuffix = 'assets/js/generators/' + gtype + '-gen.js';
           var fallbackBase = gtype.replace(/-by-.+$/,'-generator');
           var genPathFallback = 'assets/js/generators/' + fallbackBase + '.js';
+          console.debug('[app] trying generator scripts:', genExact, genPath1, genPath2, genPathGenSuffix, genPathFallback);
           return loadScript(genExact)
-            .catch(function(){ return loadScript(genPath1); })
-            .catch(function(){ return loadScript(genPath2); })
-            .catch(function(){ return loadScript(genPathGenSuffix); })
-            .catch(function(){ return loadScript(genPathFallback); })
+            .then(function(){ console.debug('[app] loaded', genExact); })
+            .catch(function(err){ console.debug('[app] failed to load', genExact, err); return loadScript(genPath1).then(function(){ console.debug('[app] loaded', genPath1); }).catch(function(err){ console.debug('[app] failed to load', genPath1, err); return loadScript(genPath2).then(function(){ console.debug('[app] loaded', genPath2); }).catch(function(err){ console.debug('[app] failed to load', genPath2, err); return loadScript(genPathGenSuffix).then(function(){ console.debug('[app] loaded', genPathGenSuffix); }).catch(function(err){ console.debug('[app] failed to load', genPathGenSuffix, err); return loadScript(genPathFallback).then(function(){ console.debug('[app] loaded', genPathFallback); }).catch(function(err){ console.debug('[app] failed to load', genPathFallback, err); throw err; }); }); }); });
             .then(function(){ return cfg; });
         }
         return cfg;
