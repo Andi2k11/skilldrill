@@ -6,7 +6,9 @@
 
 // Auto-start demo runner when page loads
 document.addEventListener('DOMContentLoaded', function(){
-  if(window.location.pathname.indexOf('index.html') !== -1 || window.location.pathname === '/' ){
+  // Run on index pages and on directory roots (supports GitHub Pages subpaths)
+  var pathname = window.location.pathname || '/';
+  if(pathname.indexOf('index.html') !== -1 || pathname === '/' || pathname.slice(-1) === '/'){
     // read exercise parameter from URL: ?exercise=path-or-id
     var params = new URLSearchParams(location.search);
     var ex = params.get('exercise');
