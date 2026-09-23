@@ -139,6 +139,10 @@ body{
 .calc-grid.sup-active .btn{opacity:0.95}
 .calc-grid.sup-active .btn.btn-primary{box-shadow:0 0 0 0.15rem rgba(99,102,241,0.18)}
 
+/* When multiple-select is active, hide all calc-grid buttons except the primary (Svar) */
+.calc-grid.multiple-select-hide .btn{display:none}
+.calc-grid.multiple-select-hide .btn.btn-primary{display:inline-flex}
+
 /* Parentheses styling: consistent colour */
 .calc-grid .btn-paren{
   background: linear-gradient(180deg,#eef2ff,#e2e8ff);

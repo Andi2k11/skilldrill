@@ -57,6 +57,8 @@
     var qt = document.querySelector(this.selectors.title);
     var answerCard = document.querySelector('.answer-card .card-body');
     var input = document.querySelector(this.selectors.input);
+    // ensure calc-grid visibility reset
+    try{ document.querySelector('.calc-grid').classList.remove('multiple-select-hide'); }catch(e){}
     // If exercise JSON contains a question.title, show that as task-specific header
     var taskTitle = (this.config && this.config.question && this.config.question.title) ? this.config.question.title : ('Fråga ' + (this.index+1) + ' / ' + this.questions.length);
     if(qs) {
@@ -108,6 +110,8 @@
               tempBtns.forEach(function(b){ b.style.minWidth = Math.ceil(maxW) + 'px'; });
             }
           }catch(e){}
+            // hide calc-grid buttons except Svar
+            try{ document.querySelector('.calc-grid').classList.add('multiple-select-hide'); }catch(e){}
         }
       } else {
         if(input){ input.focus(); }
