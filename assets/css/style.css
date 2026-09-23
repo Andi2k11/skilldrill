@@ -89,7 +89,7 @@ body{
   overflow: auto;
 }
 /* further limit SVG rendering size so tall images don't change layout */
-.question-card.has-visual .question-visual svg{
+.question-card.has-visual .question-visual .visual-overlay-inner svg{
   max-height: 80px;
 }
 
