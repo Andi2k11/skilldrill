@@ -93,6 +93,41 @@ body{
   max-height: 80px;
 }
 
+/* Overlay for SVG visual: absolute positioned so transforms don't affect layout */
+.question-visual-overlay{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.5rem; /* a bit below the card header/title */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* allow clicks through except controls */
+}
+.question-visual-overlay .visual-overlay-inner{
+  pointer-events: auto;
+  transform-origin: center center;
+  transition: transform 180ms ease;
+}
+.question-visual-overlay .visual-zoom-btn{
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  z-index: 20;
+  pointer-events: auto;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.question-visual-overlay.zoomed .visual-overlay-inner{
+  transform: scale(1.6);
+}
+
+/* ensure question-card is positioned relative to host overlays */
+.question-card{ position: relative; }
+
 /* Layout for sub-cards inside question-card */
 .sub-cards{display:flex;flex-direction:row;align-items:stretch;width:100%;box-sizing:border-box;gap:1rem;padding-right:1rem;flex:1}
 .sub-card-left{flex:0 0 60%;display:flex;flex-direction:column}

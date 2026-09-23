@@ -108,6 +108,32 @@
         // typically places the SVG string on `q.svg` or `q.visual.content`.
         if(svgHtml){
           visualContainer.innerHTML = svgHtml;
+          // create an overlay for zooming without affecting layout
+          var overlay = document.querySelector('.question-visual-overlay');
+          if(!overlay){
+            overlay = document.createElement('div');
+            overlay.className = 'question-visual-overlay';
+            // zoom control
+            var zbtn = document.createElement('button');
+            zbtn.className = 'visual-zoom-btn';
+            zbtn.title = 'Zooma';
+            zbtn.innerHTML = '\uD83D\uDD0D';
+            zbtn.addEventListener('click', function(ev){
+              ev.stopPropagation();
+              overlay.classList.toggle('zoomed');
+            });
+            overlay.appendChild(zbtn);
+            // append overlay inside question card so it's positioned relatively
+            if(questionCard) questionCard.appendChild(overlay);
+          }
+          // put svg copy into overlay (use innerHTML to preserve markup)
+          // keep zoom button as first child
+          var existingBtn = overlay.querySelector('.visual-zoom-btn');
+          overlay.innerHTML = '';
+          if(existingBtn) overlay.appendChild(existingBtn);
+          var svgWrap = document.createElement('div'); svgWrap.className = 'visual-overlay-inner';
+          svgWrap.innerHTML = svgHtml;
+          overlay.appendChild(svgWrap);
         } else {
           visualContainer.innerHTML = '';
         }
@@ -116,6 +142,8 @@
         // ensure visual container removed when no visual
         var existing = document.querySelector('.question-visual');
         if(existing) existing.parentNode.removeChild(existing);
+        var existingOverlay = document.querySelector('.question-visual-overlay');
+        if(existingOverlay) existingOverlay.parentNode.removeChild(existingOverlay);
       }
     }catch(e){ /* ignore visual rendering errors */ }
     // Render answer controls depending on question type
