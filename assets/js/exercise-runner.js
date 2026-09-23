@@ -55,6 +55,8 @@
     if(!q) return;
     var qs = document.querySelector(this.selectors.question);
     var qt = document.querySelector(this.selectors.title);
+    var answerCard = document.querySelector('.answer-card .card-body');
+    var input = document.querySelector(this.selectors.input);
     // If exercise JSON contains a question.title, show that as task-specific header
     var taskTitle = (this.config && this.config.question && this.config.question.title) ? this.config.question.title : ('Fråga ' + (this.index+1) + ' / ' + this.questions.length);
     if(qs) {
@@ -74,8 +76,29 @@
       }catch(e){ qs.textContent = q.text; }
     }
     if(qt) qt.textContent = taskTitle;
-    // focus input for the new question
-    try{ var input = document.querySelector(this.selectors.input); if(input) input.focus(); }catch(e){}
+    // Render answer controls depending on question type
+    try{
+      if(this.config && this.config.question && this.config.question.type === 'multiple-select'){
+        if(answerCard){
+          // clear existing
+          answerCard.innerHTML = '';
+          var opts = q.options || (this.config.question.answer && this.config.question.answer.options) || [];
+          var btnGroup = document.createElement('div');
+          btnGroup.className = 'd-flex flex-wrap gap-2 multiple-select-group';
+          opts.forEach(function(opt){
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'btn btn-outline-primary ms-option';
+            b.textContent = opt;
+            b.setAttribute('data-option', opt);
+            btnGroup.appendChild(b);
+          });
+          answerCard.appendChild(btnGroup);
+        }
+      } else {
+        if(input){ input.focus(); }
+      }
+    }catch(e){}
   };
 
   Runner.prototype.bind = function(){
@@ -83,29 +106,65 @@
     var input = document.querySelector(this.selectors.input);
     if(!input) return;
     input.addEventListener('answer-submit', function(){ self.submit(); });
+    // delegate clicks for multiple-select options
+    var answerCard = document.querySelector('.answer-card .card-body');
+    if(answerCard){
+      answerCard.addEventListener('click', function(ev){
+        var btn = ev.target.closest('button.ms-option');
+        if(!btn) return;
+        btn.classList.toggle('active');
+      });
+    }
   };
 
   Runner.prototype.submit = function(){
-    var input = document.querySelector(this.selectors.input);
-    var val = parseNumberAnswer(input.value || '');
     var q = this.questions[this.index];
-    var ok = (val === q.answer);
-    // simple feedback
-    if(ok){
-      input.classList.remove('is-invalid');
-      input.classList.add('is-valid');
-      this.correctCount = (this.correctCount||0) + 1;
-    } else {
-      input.classList.remove('is-valid');
-      input.classList.add('is-invalid');
-    }
+    var qtype = (this.config && this.config.question && this.config.question.type) || '';
     var self = this;
-    // after 1.5s go to next question or finish
-    setTimeout(function(){
-      if(self.index < self.questions.length-1){ self.next(); }
-      else { self.end(); }
-    },1500);
-    return ok;
+    if(qtype === 'multiple-select'){
+      var answerCard = document.querySelector('.answer-card .card-body');
+      if(!answerCard) return false;
+      var btns = Array.from(answerCard.querySelectorAll('button.ms-option'));
+      var selected = btns.filter(function(b){ return b.classList.contains('active'); }).map(function(b){ return b.getAttribute('data-option'); });
+      var correct = (q.answer || []).slice().map(String);
+      // determine correctness
+      var allSelectedCorrect = selected.length > 0 && selected.every(function(s){ return correct.indexOf(s) !== -1; });
+      var missed = correct.filter(function(c){ return selected.indexOf(c) === -1; });
+      // apply visual feedback: green for correct selections, red for incorrect selections, yellow if some missed
+      btns.forEach(function(b){
+        var opt = b.getAttribute('data-option');
+        b.classList.remove('btn-success','btn-danger','btn-warning','btn-outline-primary','active');
+        // reset to outline style
+        b.classList.add('btn-outline-primary');
+        if(selected.indexOf(opt) !== -1){
+          if(correct.indexOf(opt) !== -1){ b.classList.remove('btn-outline-primary'); b.classList.add('btn-success'); }
+          else { b.classList.remove('btn-outline-primary'); b.classList.add('btn-danger'); }
+        } else {
+          if(correct.indexOf(opt) !== -1 && missed.length>0){ b.classList.remove('btn-outline-primary'); b.classList.add('btn-warning'); }
+        }
+      });
+      var ok = (missed.length === 0) && selected.every(function(s){ return correct.indexOf(s) !== -1; });
+      if(ok) this.correctCount = (this.correctCount||0) + 1;
+      // after delay, advance
+      setTimeout(function(){ if(self.index < self.questions.length-1){ self.next(); } else { self.end(); } },1500);
+      return ok;
+    } else {
+      var input = document.querySelector(this.selectors.input);
+      var val = parseNumberAnswer(input.value || '');
+      var ok = (val === q.answer);
+      // simple feedback
+      if(ok){
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        this.correctCount = (this.correctCount||0) + 1;
+      } else {
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+      }
+      var self = this;
+      setTimeout(function(){ if(self.index < self.questions.length-1){ self.next(); } else { self.end(); } },1500);
+      return ok;
+    }
   };
 
   Runner.prototype.end = function(){
