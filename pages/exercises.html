@@ -10,50 +10,91 @@
   <div class="container">
     <h1>Övningar</h1>
     <p class="text-muted">Klicka på "Öppna" för att öppna övningen i webbgränssnittet. Klicka på QR-bilden för att ladda ner övningsfilen (.json) med övningens titel som filnamn.</p>
-    <div class="table-responsive mt-4">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Book</th>
-            <th>Chapter</th>
-            <th>Open</th>
-            <th>QR / Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Delbarhetsregler</td>
-            <td>Matte Direkt 7</td>
-            <td>1</td>
-            <td><a target="_blank" rel="noopener noreferrer" href="../?exercise=divisibility-rules">Öppna</a></td>
-            <td><a href="../exercises/divisibility-rules.json" download="Delbarhetsregler.json"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=..%2F%3Fexercise%3Ddivisibility-rules" alt="QR for divisibility-rules" /></a></td>
-          </tr>
-          <tr>
-            <td>Division med 10, 100 och 1000</td>
-            <td>Matte Direkt 7</td>
-            <td>1</td>
-            <td><a target="_blank" rel="noopener noreferrer" href="../?exercise=division-by-10-100-1000">Öppna</a></td>
-            <td><a href="../exercises/division-by-10-100-1000.json" download="Division med 10, 100 och 1000.json"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=..%2F%3Fexercise%3Ddivision-by-10-100-1000" alt="QR for division-by-10-100-1000" /></a></td>
-          </tr>
-          <tr>
-            <td>Division av decimaltal med 10, 100 och 1000</td>
-            <td>Matte Direkt 7</td>
-            <td>1</td>
-            <td><a target="_blank" rel="noopener noreferrer" href="../?exercise=division-decimal-by-10-100-1000">Öppna</a></td>
-            <td><a href="../exercises/division-decimal-by-10-100-1000.json" download="Division av decimaltal med 10, 100 och 1000.json"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=..%2F%3Fexercise%3Ddivision-decimal-by-10-100-1000" alt="QR for division-decimal-by-10-100-1000" /></a></td>
-          </tr>
-          <tr>
-            <td>Division av heltal och decimaltal med 10, 100 och 1000</td>
-            <td>Matte Direkt 7</td>
-            <td>1</td>
-            <td><a target="_blank" rel="noopener noreferrer" href="../?exercise=division-mixed-by-10-100-1000">Öppna</a></td>
-            <td><a href="../exercises/division-mixed-by-10-100-1000.json" download="Division av heltal och decimaltal med 10, 100 och 1000.json"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=..%2F%3Fexercise%3Ddivision-mixed-by-10-100-1000" alt="QR for division-mixed-by-10-100-1000" /></a></td>
-          </tr>
-          <!-- Additional rows omitted for brevity; regenerate from manifest if needed -->
-        </tbody>
-      </table>
-    </div>
+      <div id="exercises-accordion" class="accordion mt-4"></div>
+
+      <script>
+        // Build nested accordions from exercises/manifest.json
+        (function(){
+          function q(text){ return document.createTextNode(text); }
+          fetch('../exercises/manifest.json').then(function(r){ if(!r.ok) throw new Error('manifest fetch failed'); return r.json(); }).then(function(list){
+            // Group by book -> chapter
+            var books = {};
+            list.forEach(function(it){
+              var book = it.book || 'Unknown';
+              var chap = it.chapter || '0';
+              books[book] = books[book] || {};
+              books[book][chap] = books[book][chap] || [];
+              books[book][chap].push(it);
+            });
+
+            var acc = document.getElementById('exercises-accordion');
+            var bookIndex = 0;
+            for(var bookName in books){
+              bookIndex++;
+              var bookId = 'book-' + bookIndex;
+              var bookCard = document.createElement('div');
+              bookCard.className = 'accordion-item';
+              var bh = document.createElement('h2'); bh.className='accordion-header'; bh.id = bookId + '-hdr';
+              var bbtn = document.createElement('button'); bbtn.className='accordion-button collapsed'; bbtn.type='button';
+              bbtn.setAttribute('data-bs-toggle','collapse'); bbtn.setAttribute('data-bs-target','#' + bookId + '-body');
+              bbtn.setAttribute('aria-expanded','false'); bbtn.setAttribute('aria-controls', bookId + '-body');
+              bbtn.appendChild(q(bookName)); bh.appendChild(bbtn); bookCard.appendChild(bh);
+              var bbody = document.createElement('div'); bbody.id = bookId + '-body'; bbody.className='accordion-collapse collapse'; bbody.setAttribute('aria-labelledby', bookId + '-hdr');
+              var bbodyInner = document.createElement('div'); bbodyInner.className='accordion-body';
+
+              // chapters accordion inside book
+              var chaptersAcc = document.createElement('div'); chaptersAcc.className='accordion'; chaptersAcc.id = bookId + '-chapters';
+              var chapIndex = 0;
+              var chKeys = Object.keys(books[bookName]).sort(function(a,b){ return +a - +b; });
+              chKeys.forEach(function(ch){
+                chapIndex++;
+                var chId = bookId + '-chap-' + chapIndex;
+                var chItem = document.createElement('div'); chItem.className='accordion-item';
+                var chHdr = document.createElement('h3'); chHdr.className='accordion-header'; chHdr.id = chId + '-hdr';
+                var chBtn = document.createElement('button'); chBtn.className='accordion-button collapsed'; chBtn.type='button';
+                chBtn.setAttribute('data-bs-toggle','collapse'); chBtn.setAttribute('data-bs-target','#' + chId + '-body');
+                chBtn.setAttribute('aria-expanded','false'); chBtn.setAttribute('aria-controls', chId + '-body');
+                chBtn.appendChild(q('Kapitel ' + ch)); chHdr.appendChild(chBtn); chItem.appendChild(chHdr);
+                var chBody = document.createElement('div'); chBody.id = chId + '-body'; chBody.className='accordion-collapse collapse'; chBody.setAttribute('aria-labelledby', chId + '-hdr');
+                var chBodyInner = document.createElement('div'); chBodyInner.className='accordion-body';
+
+                // create table of exercises for this chapter
+                var table = document.createElement('table'); table.className='table table-sm table-striped';
+                var thead = document.createElement('thead'); thead.innerHTML = '<tr><th>Titel</th><th>Öppna</th><th>Hämta (QR)</th></tr>'; table.appendChild(thead);
+                var tbody = document.createElement('tbody');
+                books[bookName][ch].forEach(function(ex){
+                  var tr = document.createElement('tr');
+                  var tdTitle = document.createElement('td'); tdTitle.appendChild(q(ex.title || ex.slug || ex.id));
+                  var tdOpen = document.createElement('td');
+                  var aOpen = document.createElement('a'); aOpen.href = '../?exercise=' + encodeURIComponent(ex.slug || ex.id); aOpen.target = '_blank'; aOpen.rel='noopener noreferrer'; aOpen.appendChild(q('Öppna'));
+                  tdOpen.appendChild(aOpen);
+                  var tdQR = document.createElement('td');
+                  var aQR = document.createElement('a'); aQR.href = '../' + (ex.path || ('exercises/' + (ex.slug||ex.id) + '.json'));
+                  var filename = (ex.title || ex.slug || ex.id).replace(/\s+/g,'_') + '.json';
+                  aQR.setAttribute('download', filename);
+                  var img = document.createElement('img'); img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=..%2F%3Fexercise%3D' + encodeURIComponent(ex.slug || ex.id);
+                  img.alt = 'QR for ' + (ex.slug || ex.id);
+                  aQR.appendChild(img); tdQR.appendChild(aQR);
+                  tr.appendChild(tdTitle); tr.appendChild(tdOpen); tr.appendChild(tdQR);
+                  tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                chBodyInner.appendChild(table);
+                chBody.appendChild(chBodyInner);
+                chItem.appendChild(chBody);
+                chaptersAcc.appendChild(chItem);
+              });
+
+              bbodyInner.appendChild(chaptersAcc);
+              bbody.appendChild(bbodyInner);
+              bookCard.appendChild(bbody);
+              acc.appendChild(bookCard);
+            }
+          }).catch(function(err){
+            var acc = document.getElementById('exercises-accordion'); acc.innerHTML = '<div class="alert alert-danger">Kunde inte läsa manifest: '+(err.message||err)+'</div>';
+          });
+        })();
+      </script>
   </div>
 </body>
 </html>
