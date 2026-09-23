@@ -164,18 +164,28 @@
             btnGroup.appendChild(b);
           });
           answerCard.appendChild(btnGroup);
-          // if this is single-choice, hide the main Svar button to avoid confusion
-          try{
-            var calcGrid = document.querySelector('.calc-grid');
-            if(calcGrid){
-              var svarBtn = calcGrid.querySelector('button.btn-primary');
-              if(qtype === 'multiple-choice'){
-                if(svarBtn) svarBtn.style.display = 'none';
-              } else {
-                if(svarBtn) svarBtn.style.display = '';
-              }
-            }
-          }catch(e){}
+              // Determine whether the main "Svar" (submit) button should be shown.
+              // New behavior: if the exercise JSON sets `question.multipleAnswersPossible = true`,
+              // or the generator marks the question with `multiplePossible = true`, then
+              // always show the Svar button (user must submit). Otherwise, for strict
+              // single-answer multiple-choice we hide the Svar button and auto-submit on choice.
+              try{
+                var calcGrid = document.querySelector('.calc-grid');
+                if(calcGrid){
+                  var svarBtn = calcGrid.querySelector('button.btn-primary');
+                  var alwaysRequireSubmit = false;
+                  // Exercise-level override from JSON: question.multipleAnswersPossible
+                  if(this.config && this.config.question && this.config.question.multipleAnswersPossible){ alwaysRequireSubmit = true; }
+                  // Per-question override set by generator: q.multiplePossible
+                  if(q && q.multiplePossible){ alwaysRequireSubmit = true; }
+                  if(qtype === 'multiple-choice'){
+                    if(alwaysRequireSubmit){ if(svarBtn) svarBtn.style.display = ''; }
+                    else { if(svarBtn) svarBtn.style.display = 'none'; }
+                  } else {
+                    if(svarBtn) svarBtn.style.display = '';
+                  }
+                }
+              }catch(e){}
           // normalize widths: set all buttons to the width of the widest button
           try{
             var tempBtns = Array.from(btnGroup.querySelectorAll('button'));
