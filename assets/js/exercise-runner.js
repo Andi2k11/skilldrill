@@ -220,11 +220,13 @@
       answerCard.addEventListener('click', function(ev){
         var btn = ev.target.closest('button.ms-option');
         if(!btn) return;
+        // decide based on exercise-level flag whether submit is required
+        var exerciseRequiresSubmit = !!(self.config && self.config.question && self.config.question.multipleAnswersPossible);
         if(btn.classList.contains('single-choice')){
           Array.from(answerCard.querySelectorAll('button.ms-option')).forEach(function(b){ b.classList.remove('active'); });
           btn.classList.add('active');
-          // submit immediately for single-choice buttons
-          try{ self.submit(); }catch(e){}
+          // submit immediately for single-choice buttons only when the exercise does NOT require explicit submit
+          if(!exerciseRequiresSubmit){ try{ self.submit(); }catch(e){} }
         } else {
           btn.classList.toggle('active');
         }
