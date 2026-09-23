@@ -94,6 +94,7 @@ body{
   max-height: 80px;
   width: auto; /* allow natural SVG width to apply */
   max-width: 800px; /* allow wider number lines when there is horizontal space */
+  background: transparent; /* ensure SVG renders with transparent background */
 }
 
 /* Apply a transform-based zoom to the visual wrapper so it appears larger
