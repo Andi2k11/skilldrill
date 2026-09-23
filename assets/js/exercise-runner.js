@@ -26,7 +26,7 @@
       var gtype = cfg.generator && cfg.generator.type;
       // look up generator in known registries; include roundingGenerators and any other registries present
       var gen = null;
-      var registries = [ 'multiplicationGenerators', 'divisionGenerators', 'roundingGenerators' ];
+      var registries = [ 'multiplicationGenerators', 'divisionGenerators', 'roundingGenerators', 'divisibilityGenerators' ];
       for(var i=0;i<registries.length && !gen;i++){
         var r = window[registries[i]];
         if(r && r[gtype]) gen = r[gtype];

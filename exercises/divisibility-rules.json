@@ -1,0 +1,56 @@
+{
+  "id": "md7-k1-divisibility-rules",
+  "title": "Delbarhetsregler",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avgör vilka av delbarhetsreglerna 2, 3, 5 och 10 som fungerar för ett tal mindre än 400.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "multiple-select",
+    "title": "Vilka delbarhetsregler fungerar?",
+    "prompt": "Vilka delbarhetsregler fungerar på talet {{number}}?",
+    "answer": {
+      "options": ["2", "3", "5", "10"]
+    }
+  },
+  "generator": {
+    "type": "divisibility-rules",
+    "parameters": {
+      "min": 1,
+      "max": 399,
+      "divisors": [2, 3, 5, 10],
+      "questionCount": 15
+    }
+  }
+}
+{
+  "id": "md7-k1-divisibility-rules",
+  "title": "Delbarhetsregler",
+  "book": "Matte Direkt 7",
+  "chapter": 1,
+  "description": "Avgör vilka av delbarhetsreglerna 2, 3, 5 och 10 som fungerar för ett tal mindre än 400.",
+  "settings": {
+    "questionCount": 15,
+    "showCorrectAnswer": false
+  },
+  "question": {
+    "type": "multiple-select",
+    "title": "Vilka delbarhetsregler fungerar?",
+    "prompt": "Vilka delbarhetsregler fungerar på talet {{number}}?",
+    "answer": {
+      "options": ["2", "3", "5", "10"]
+    }
+  },
+  "generator": {
+    "type": "divisibility-rules",
+    "parameters": {
+      "min": 1,
+      "max": 399,
+      "divisors": [2, 3, 5, 10],
+      "questionCount": 15
+    }
+  }
+}
