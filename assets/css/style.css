@@ -82,7 +82,7 @@ body{
 .question-card.has-visual .question-visual{
   flex: 0 0 auto;
   /* tighter max-height to better match non-visual exercises */
-  max-height: 30%;
+  max-height: 25%;
 }
 .question-card.has-visual .question-text{
   flex: 1 1 auto;
@@ -90,7 +90,7 @@ body{
 }
 /* further limit SVG rendering size so tall images don't change layout */
 .question-card.has-visual .question-visual svg{
-  max-height: 110px;
+  max-height: 80px;
 }
 
 /* Layout for sub-cards inside question-card */
