@@ -1,0 +1,100 @@
+[
+  {
+    "id": "md7-k1-divisibility-rules",
+    "title": "Delbarhetsregler",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/divisibility-rules.json"
+  },
+  {
+    "id": "md7-k1-div-10-100-1000",
+    "title": "Division med 10, 100 och 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/division-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-div-decimal-10-100-1000",
+    "title": "Division av decimaltal med 10, 100 och 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/division-decimal-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-div-mixed-10-100-1000",
+    "title": "Division av heltal och decimaltal med 10, 100 och 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/division-mixed-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-mult-10-100-1000",
+    "title": "Multiplikation med 10, 100, 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/multiplication-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-mult-decimal-10-100-1000",
+    "title": "Multiplikation av decimaltal med 10, 100 och 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/multiplication-decimal-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-mult-mixed-10-100-1000",
+    "title": "Multiplikation av heltal och decimaltal med 10, 100 och 1000",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/multiplication-mixed-by-10-100-1000.json"
+  },
+  {
+    "id": "md7-k1-number-line-arrow",
+    "title": "Vilket tal pekar pilen på?",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/number-line-arrow.json"
+  },
+  {
+    "id": "md7-k1-place-value-decimal",
+    "title": "Siffrans platsvärde (decimaltal)",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/place-value-decimal.json"
+  },
+  {
+    "id": "md7-k1-place-value-integer",
+    "title": "Siffrans platsvärde (heltal)",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/place-value-integer.json"
+  },
+  {
+    "id": "md7-k1-place-value-mixed",
+    "title": "Siffrans platsvärde (heltal och decimaltal)",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/place-value-mixed.json"
+  },
+  {
+    "id": "md7-k1-rounding-decimal",
+    "title": "Avrundning av decimaltal",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/rounding-decimal.json"
+  },
+  {
+    "id": "md7-k1-rounding-integer",
+    "title": "Avrundning av heltal",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/rounding-integer.json"
+  },
+  {
+    "id": "md7-k1-rounding-mixed",
+    "title": "Blandad avrundning",
+    "book": "Matte Direkt 7",
+    "chapter": 1,
+    "path": "exercises/rounding-mixed.json"
+  }
+]
