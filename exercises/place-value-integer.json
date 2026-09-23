@@ -12,6 +12,7 @@
     "type": "multiple-choice",
     "title": "Vilket platsvärde har siffran?",
     "prompt": "Vilket platsvärde har siffran {{digit}} i talet {{numberDisplay}}?",
+    "multipleAnswersPossible": false,
     "answer": {
       "options": [
         "ental",

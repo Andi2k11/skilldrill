@@ -12,6 +12,7 @@
     "type": "multiple-select",
     "title": "Vilka delbarhetsregler fungerar?",
     "prompt": "{{number}}",
+    "multipleAnswersPossible": true,
     "shuffleAnswers": false,
     "answer": {
       "options": ["2", "3", "5", "10"]
