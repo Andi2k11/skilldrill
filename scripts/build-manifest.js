@@ -43,8 +43,8 @@ function buildHtml(manifest){
         // Use the original JSON filename (without .json) as the exercise param so viewer receives the filename
         var filename = item.path.replace(/\\/g,'/').split('/').pop();
         var slug = filename.replace(/\.json$/i,'');
-        // Use a relative query (no leading slash) so links work on GitHub Pages subpath
-        const viewerUrl = `?exercise=${encodeURIComponent(slug)}`;
+        // pages/exercises.html lives in /pages/, so link to the site index with a ../ prefix
+        const viewerUrl = `../?exercise=${encodeURIComponent(slug)}`;
         const qr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(viewerUrl)}`;
         html += `<div class="col-md-4 mb-3"><div class="card"><div class="card-body"><h5 class="card-title">${item.title}</h5><p class="card-text"><a target="_blank" rel="noopener noreferrer" href="${viewerUrl}">Öppna</a></p><img src="${qr}" alt="QR for ${item.id}" /></div></div></div>`;
       });
