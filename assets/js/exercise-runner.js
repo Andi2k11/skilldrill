@@ -94,6 +94,20 @@
             btnGroup.appendChild(b);
           });
           answerCard.appendChild(btnGroup);
+          // normalize widths: set all buttons to the width of the widest button
+          try{
+            var tempBtns = Array.from(btnGroup.querySelectorAll('button'));
+            var maxW = 0;
+            tempBtns.forEach(function(b){
+              // ensure natural width measurement
+              b.style.width = 'auto';
+              var w = b.getBoundingClientRect().width;
+              if(w > maxW) maxW = w;
+            });
+            if(maxW > 0){
+              tempBtns.forEach(function(b){ b.style.minWidth = Math.ceil(maxW) + 'px'; });
+            }
+          }catch(e){}
         }
       } else {
         if(input){ input.focus(); }
