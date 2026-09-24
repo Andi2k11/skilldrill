@@ -14,9 +14,11 @@ document.addEventListener('DOMContentLoaded', function(){
     var btn = e.target.closest('button');
     if(!btn) return;
     var val = btn.textContent.trim();
+      var action = btn.getAttribute('data-action');
 
     // treat several representations of the exponent-toggle button as the same
-      if(/^(\^|x\s*\u207F|x\s*n|xn|x\s*\u2079)$/i.test(val)){
+      // If the button has an explicit data-action, use that first (more robust)
+      if(action === 'superscript' || /^(\^|x\s*\u207F|x\s*n|xn|x\s*\u2079)$/i.test(val)){
       // toggle caret/superscript mode
       caretMode = !caretMode;
       if(caretMode){
