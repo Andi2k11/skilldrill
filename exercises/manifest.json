@@ -120,7 +120,7 @@
     "id": "md7-k1-exponent-to-power-of-ten",
     "slug": "exponent-to-power-of-ten",
     "title": "Tiopotens till tal",
-    "book": "Matte Direkt 7",
+    "book": "Matte Direkt 9",
     "chapter": 1,
     "path": "exercises/exponent-to-power-of-ten.json"
   },
@@ -128,7 +128,7 @@
     "id": "md7-k1-power-of-ten-to-exponent",
     "slug": "power-of-ten-to-exponent",
     "title": "Tiopotenser till potensform",
-    "book": "Matte Direkt 7",
+    "book": "Matte Direkt 9",
     "chapter": 1,
     "path": "exercises/power-of-ten-to-exponent.json"
   }
