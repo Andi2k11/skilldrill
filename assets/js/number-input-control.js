@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var val = btn.textContent.trim();
 
     // treat several representations of the exponent-toggle button as the same
-    if(/^(\^|x\s*\u2079|x\s*n|xn)$/i.test(val)){
+      if(/^(\^|x\s*\u207F|x\s*n|xn|x\s*\u2079)$/i.test(val)){
       // toggle caret/superscript mode
       caretMode = !caretMode;
       if(caretMode){
